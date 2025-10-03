@@ -12,7 +12,7 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	Global.debugged_in = false
-	Global.get_node("GameHUD").hide()
+	Global.get_node("GameHUD").hide() # does not work?
 	await get_tree().create_timer(1, false).timeout
 	can_skip = true
 

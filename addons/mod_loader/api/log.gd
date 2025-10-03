@@ -5,6 +5,9 @@ extends Object
 ## This Class provides methods for logging, retrieving logged data, and internal methods for working with log files.
 
 
+# Path to the logs directory
+const LOGS_DIR_PATH := "user://logs"
+
 # Path to the latest log file.
 const MOD_LOG_PATH := "user://logs/modloader.log"
 
@@ -518,12 +521,16 @@ static func _get_date_time_string() -> String:
 # =============================================================================
 
 static func _write_to_log_file(string_to_write: String) -> void:
+	if not DirAccess.dir_exists_absolute(LOGS_DIR_PATH):
+		DirAccess.make_dir_absolute(LOGS_DIR_PATH)
+	
 	if not FileAccess.file_exists(MOD_LOG_PATH):
 		_rotate_log_file()
 
 	var log_file := FileAccess.open(MOD_LOG_PATH, FileAccess.READ_WRITE)
 
 	if log_file == null:
+	#	print("%s" % FileAccess.get_open_error())
 		assert(false, "Could not open log file, error code: %s" % error)
 		return
 
@@ -535,7 +542,14 @@ static func _write_to_log_file(string_to_write: String) -> void:
 # Keeps log backups for every run, just like the Godot gdscript implementation of
 # https://github.com/godotengine/godot/blob/1d14c054a12dacdc193b589e4afb0ef319ee2aae/core/io/logger.cpp#L151
 static func _rotate_log_file() -> void:
+	
+	# before file system errors start occuring
+	#print(OS.get_data_dir())
+	
 	var MAX_LOGS: int = ProjectSettings.get_setting("debug/file_logging/max_log_files")
+
+	#if MAX_LOGS < 1:
+	#	return
 
 	if FileAccess.file_exists(MOD_LOG_PATH):
 		if MAX_LOGS > 1:
@@ -552,6 +566,7 @@ static func _rotate_log_file() -> void:
 	# only File.WRITE creates a new file, File.READ_WRITE throws an error
 	var log_file := FileAccess.open(MOD_LOG_PATH, FileAccess.WRITE)
 	if log_file == null:
+	#	print("%s" % FileAccess.get_open_error())
 		assert(false, "Could not open log file, error code: %s" % error)
 	log_file.store_string('%s Created log' % _get_date_string())
 	log_file.close()
