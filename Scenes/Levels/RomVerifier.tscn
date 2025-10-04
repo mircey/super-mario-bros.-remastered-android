@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://d0mmkuq7wtpcl"]
+[gd_scene load_steps=28 format=3 uid="uid://d0mmkuq7wtpcl"]
 
 [ext_resource type="Theme" uid="uid://dtn507x2b5de7" path="res://Resources/Theme.tres" id="1_qwra1"]
 [ext_resource type="Script" uid="uid://dhxt5av5njyiv" path="res://Scripts/UI/RomVerifier.gd" id="1_r85ci"]
@@ -88,6 +88,8 @@ script = ExtResource("8_c20ch")
 Overworld = SubResource("Resource_euqtg")
 metadata/_custom_type_script = "uid://cmvlgsjmsk0v5"
 
+[sub_resource type="GDScript" id="GDScript_2ok7u"]
+
 [node name="ROMVerifier" type="Node"]
 script = ExtResource("1_r85ci")
 
@@ -175,7 +177,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Please Drag and drop your vanilla WORLD \"super mario bros\" rom onto the window."
+text = "Please tap the screen
+and select your
+vanilla WORLD
+\"super mario bros\" rom."
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
@@ -228,3 +233,12 @@ stream = ExtResource("11_4o1wk")
 
 [node name="ErrorSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_2ok7u")
+
+[node name="ROMSelectorButton" type="Button" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+offset_right = 256.0
+offset_bottom = 240.0
+flat = true
+script = SubResource("GDScript_2ok7u")
+
+[connection signal="pressed" from="ROMSelectorButton" to="." method="_on_screen_tapped"]

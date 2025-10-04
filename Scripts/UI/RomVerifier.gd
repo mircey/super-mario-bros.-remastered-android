@@ -3,22 +3,47 @@ extends Node
 
 const VALID_HASH := "c9b34443c0414f3b91ef496d8cfee9fdd72405d673985afa11fb56732c96152b"
 
+# implemented as per https://github.com/SeppNel/Godot-File-Picker/tree/main
+var android_picker
+
 func _ready() -> void:
 	Global.get_node("GameHUD").hide()
-	get_window().files_dropped.connect(on_file_dropped)
 	await get_tree().physics_frame
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 	DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
+	#if Engine.has_singleton("GodotFilePicker"):
+	#print(Engine.get_singleton_list())
+	android_picker = Engine.get_singleton("GodotFilePicker")
+	android_picker.file_picked.connect(_on_file_selected)
 
+func _on_screen_tapped() -> void:
+	#print("screen tapped")
+	# Call the file picker (with the specified type)
+	android_picker.openFilePicker("*/*")
 
-func on_file_dropped(files: PackedStringArray) -> void:
-	for i in files:
-		if is_valid_rom(i):
-			Global.rom_path = i
-			verified()
-			copy_rom(i)
-			return
-	error()
+func _on_file_selected(temp_path: String, mime_type: String) -> void:
+	print("Temporary path: " + temp_path)
+	print("Mime type: " + mime_type)
+
+	# Here you read the file or copy it to another directory
+	if is_valid_rom(temp_path):
+		Global.rom_path = temp_path
+		verified()
+		copy_rom(temp_path)
+	else:
+		error()
+
+	# Now you can delete the temporary file
+	DirAccess.remove_absolute(temp_path)
+
+#func on_file_selected(files: PackedStringArray) -> void:
+#	for i in files:
+#		if is_valid_rom(i):
+#			Global.rom_path = i
+#			verified()
+#			copy_rom(i)
+#			return
+#	error()
 
 func copy_rom(file_path := "") -> void:
 	DirAccess.copy_absolute(file_path, Global.ROM_PATH)
