@@ -7,7 +7,7 @@ extends AssetRipper
 func _ready() -> void:
 	Global.get_node("GameHUD").hide()
 	
-	rom = FileAccess.get_file_as_bytes(Global.rom_path)
+	rom = FileAccess.get_file_as_bytes(Global.ROM_PATH)
 	prg_rom_size = rom[4] * 16384
 	chr_rom = rom.slice(16 + prg_rom_size)
 	await get_tree().create_timer(1, false).timeout
