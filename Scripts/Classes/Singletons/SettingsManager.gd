@@ -2,11 +2,11 @@ extends Node
 
 var file := {
 	"video": {
-		"mode": 0,
+		"mode": 2,
 		"size": 0,
 		"vsync": 1,
 		"drop_shadows": 1,
-		"scaling": 0,
+		"scaling": 1,
 		"visuals": 0,
 		"hud_size": 0
 	},

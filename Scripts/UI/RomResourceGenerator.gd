@@ -15,6 +15,8 @@ func _ready() -> void:
 
 func _exit_tree() -> void:
 	Global.get_node("GameHUD").show()
+	get_tree().root.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_EXPAND
+	Settings.file.video.size = 1
 
 
 

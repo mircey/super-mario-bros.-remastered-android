@@ -9,8 +9,8 @@ var android_picker
 func _ready() -> void:
 	Global.get_node("GameHUD").hide()
 	await get_tree().physics_frame
-	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-	DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
+	#DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+	#DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
 	#if Engine.has_singleton("GodotFilePicker"):
 	#print(Engine.get_singleton_list())
 	android_picker = Engine.get_singleton("GodotFilePicker")
