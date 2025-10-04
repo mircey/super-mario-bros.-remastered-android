@@ -22,8 +22,8 @@ func _on_screen_tapped() -> void:
 	android_picker.openFilePicker("*/*")
 
 func _on_file_selected(temp_path: String, mime_type: String) -> void:
-	print("Temporary path: " + temp_path)
-	print("Mime type: " + mime_type)
+	#print("Temporary path: " + temp_path)
+	#print("Mime type: " + mime_type)
 
 	# Here you read the file or copy it to another directory
 	if is_valid_rom(temp_path):

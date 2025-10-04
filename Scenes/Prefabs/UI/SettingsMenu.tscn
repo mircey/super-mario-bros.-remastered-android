@@ -245,6 +245,7 @@ layout_mode = 2
 text = "►"
 
 [node name="Video" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" node_paths=PackedStringArray("options")]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = -4
@@ -475,7 +476,7 @@ size_flags_vertical = 3
 theme_override_constants/separation = -4
 script = ExtResource("4_avtty")
 category_name = "SETTINGS_RESOURCE_PACK"
-options = [NodePath("SelectableOptionNode"), NodePath("SelectableOptionNode2"), NodePath("SelectableOptionNode3")]
+options = [NodePath("SelectableOptionNode2")]
 
 [node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/ResourcePacks"]
 visible = false
@@ -485,6 +486,7 @@ text = "RESOURCE_PACK_WARNING"
 autowrap_mode = 2
 
 [node name="SelectableOptionNode" parent="PanelContainer/MarginContainer/VBoxContainer/ResourcePacks" groups=["Options"] instance=ExtResource("9_t6b48")]
+visible = false
 layout_mode = 2
 title = "RESOURCE_OPEN_FOLDER"
 
@@ -494,6 +496,7 @@ layout_mode = 2
 title = "RESOURCE_REFRESH"
 
 [node name="SelectableOptionNode3" parent="PanelContainer/MarginContainer/VBoxContainer/ResourcePacks" instance=ExtResource("9_t6b48")]
+visible = false
 layout_mode = 2
 title = "RESOURCE_PACK_CREATE"
 
