@@ -241,4 +241,4 @@ grow_vertical = 2
 flat = true
 script = SubResource("GDScript_2ok7u")
 
-[connection signal="pressed" from="ROMSelectorButton" to="." method="_on_screen_tapped"]
+[connection signal="pressed" from="ROMSelectorButton" to="." method="on_screen_tapped"]

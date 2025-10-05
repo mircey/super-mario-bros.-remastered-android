@@ -217,4 +217,13 @@ horizontal_alignment = 1
 vertical_alignment = 2
 autowrap_mode = 2
 
+[node name="SkipButton" type="Button" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="go_to_menu" unbinds=1]
+[connection signal="pressed" from="SkipButton" to="." method="on_screen_tapped"]

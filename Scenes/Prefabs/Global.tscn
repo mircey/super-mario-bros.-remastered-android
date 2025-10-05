@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://c3h2iqkvitqd2"]
+[gd_scene load_steps=57 format=3 uid="uid://c3h2iqkvitqd2"]
 
 [ext_resource type="PackedScene" uid="uid://bod0jkf7jc5pm" path="res://Scenes/Prefabs/GameHud.tscn" id="1_ctvpw"]
 [ext_resource type="Script" uid="uid://bbxqn16ekbpcl" path="res://Scripts/Classes/Singletons/Global.gd" id="1_t23sr"]
@@ -23,6 +23,7 @@
 [ext_resource type="Script" uid="uid://cbal8ms2oe1ik" path="res://Scripts/Classes/Components/ResourceSetterNew.gd" id="19_okfpr"]
 [ext_resource type="Texture2D" uid="uid://bhgjvnslkt143" path="res://Assets/Sprites/UI/PanelSelected.png" id="19_xspbb"]
 [ext_resource type="JSON" path="res://Assets/Sprites/UI/Cursor.json" id="20_3l3ph"]
+[ext_resource type="PackedScene" uid="uid://fjrcs2mshn2x" path="res://Scenes/Prefabs/UI/OnScreenControls.tscn" id="24_3l3ph"]
 
 [sub_resource type="Animation" id="Animation_6jmk5"]
 resource_name = "FadeIn"
@@ -430,6 +431,8 @@ metadata/_custom_type_script = "uid://ctsjagoa5t33f"
 script = ExtResource("19_l7dvb")
 labels = [NodePath("../CanvasLayer/VBoxContainer/ErrorMessage"), NodePath("../CanvasLayer/VBoxContainer/Comment"), NodePath("../CanvasLayer/VBoxContainer/Warning")]
 metadata/_custom_type_script = "uid://dt2p68xl462v2"
+
+[node name="OnScreenControls" parent="." instance=ExtResource("24_3l3ph")]
 
 [connection signal="finished" from="ScoreTally" to="." method="on_score_sfx_finished"]
 [connection signal="finished" from="ScoreTallyEnd" to="." method="on_score_sfx_finished"]

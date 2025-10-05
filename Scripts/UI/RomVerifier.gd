@@ -6,22 +6,27 @@ const VALID_HASH := "c9b34443c0414f3b91ef496d8cfee9fdd72405d673985afa11fb56732c9
 # implemented as per https://github.com/SeppNel/Godot-File-Picker/tree/main
 var android_picker
 
+func haptic_feedback() -> void:
+	Input.vibrate_handheld(3, 0.5)
+
 func _ready() -> void:
 	Global.get_node("GameHUD").hide()
+	Global.get_node("OnScreenControls").hide()
 	await get_tree().physics_frame
 	#DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 	#DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
 	#if Engine.has_singleton("GodotFilePicker"):
 	#print(Engine.get_singleton_list())
 	android_picker = Engine.get_singleton("GodotFilePicker")
-	android_picker.file_picked.connect(_on_file_selected)
+	android_picker.file_picked.connect(on_file_selected)
 
-func _on_screen_tapped() -> void:
+func on_screen_tapped() -> void:
 	#print("screen tapped")
 	# Call the file picker (with the specified type)
+	haptic_feedback()
 	android_picker.openFilePicker("*/*")
 
-func _on_file_selected(temp_path: String, mime_type: String) -> void:
+func on_file_selected(temp_path: String, mime_type: String) -> void:
 	#print("Temporary path: " + temp_path)
 	#print("Mime type: " + mime_type)
 
@@ -73,6 +78,7 @@ func verified() -> void:
 
 func _exit_tree() -> void:
 	Global.get_node("GameHUD").show()
+	Global.get_node("OnScreenControls").show()
 
 func create_file_pointer(file_path := "") -> void:
 	var pointer = FileAccess.open(Global.ROM_POINTER_PATH, FileAccess.WRITE)
