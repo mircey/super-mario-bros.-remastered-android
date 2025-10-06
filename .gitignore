@@ -1,4 +1,7 @@
 # Godot 4+ specific ignores
 .godot/
-/android/
+/android/build/.gradle/
+/android/build/assets/
+/android/build/build/
+/android/build/libs/
 Exports/

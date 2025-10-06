@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://q1fcrx6o6ic2" path="res://Assets/Sprites/UI/OnScreenControls/Select.png" id="6_puarm"]
 [ext_resource type="Texture2D" uid="uid://bknch6ytklusn" path="res://Assets/Sprites/UI/OnScreenControls/A.png" id="6_skjid"]
 [ext_resource type="Texture2D" uid="uid://bgf3d6pag47mj" path="res://Assets/Sprites/UI/OnScreenControls/B.png" id="7_0rhtk"]
-[ext_resource type="Texture2D" uid="uid://omhdmu4mg6xn" path="res://Assets/Sprites/UI/OnScreenControls/RunLock.png" id="8_h1250"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/UI/OnScreenControls/RunLock.png" id="8_h1250"]
 [ext_resource type="Texture2D" uid="uid://d4nnv0bx18n5o" path="res://Assets/Sprites/UI/OnScreenControls/Start.png" id="9_yhrc3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wpx6y"]

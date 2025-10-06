@@ -18,7 +18,7 @@ var file := {
 		"extra_bgm": 1,
 		"skid_sfx": 1,
 		"extra_sfx": 0,
-		"menu_bgm": 0
+		"menu_bgm": 1
 	},
 	"game": {
 		"campaign": "SMB1",
