@@ -1,0 +1,186 @@
+[gd_scene load_steps=21 format=3 uid="uid://fjrcs2mshn2x"]
+
+[ext_resource type="Texture2D" uid="uid://b38t7ons3gxll" path="res://Assets/Sprites/UI/OnScreenControls/Left.png" id="1_f8rqt"]
+[ext_resource type="Script" uid="uid://d1c6ambcmj86a" path="res://Scripts/UI/OnScreenControls.gd" id="1_sxebv"]
+[ext_resource type="Texture2D" uid="uid://6hm3fx51kh4o" path="res://Assets/Sprites/UI/OnScreenControls/Right.png" id="2_uhtvp"]
+[ext_resource type="Texture2D" uid="uid://dufc27althfgm" path="res://Assets/Sprites/UI/OnScreenControls/Up.png" id="3_uhtvp"]
+[ext_resource type="Texture2D" uid="uid://cy63aajmy3mv" path="res://Assets/Sprites/UI/OnScreenControls/Down.png" id="4_f8y6k"]
+[ext_resource type="Texture2D" uid="uid://q1fcrx6o6ic2" path="res://Assets/Sprites/UI/OnScreenControls/Select.png" id="6_puarm"]
+[ext_resource type="Texture2D" uid="uid://bknch6ytklusn" path="res://Assets/Sprites/UI/OnScreenControls/A.png" id="6_skjid"]
+[ext_resource type="Texture2D" uid="uid://bgf3d6pag47mj" path="res://Assets/Sprites/UI/OnScreenControls/B.png" id="7_0rhtk"]
+[ext_resource type="Texture2D" uid="uid://omhdmu4mg6xn" path="res://Assets/Sprites/UI/OnScreenControls/RunLock.png" id="8_h1250"]
+[ext_resource type="Texture2D" uid="uid://d4nnv0bx18n5o" path="res://Assets/Sprites/UI/OnScreenControls/Start.png" id="9_yhrc3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wpx6y"]
+size = Vector2(54, 66)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jqpu6"]
+size = Vector2(54, 66)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y0fgl"]
+size = Vector2(28, 46)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lds6l"]
+size = Vector2(28, 46)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ycf5h"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_17p43"]
+size = Vector2(54, 54)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yhrc3"]
+size = Vector2(40, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h1250"]
+size = Vector2(54, 54)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_puarm"]
+size = Vector2(24, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_twq5y"]
+size = Vector2(24, 24)
+
+[node name="OnScreenControls" type="CanvasLayer"]
+script = ExtResource("1_sxebv")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -141.0
+offset_right = 141.0
+grow_vertical = 0
+
+[node name="LeftSprite" type="Sprite2D" parent="Control"]
+modulate = Color(1, 1, 1, 0.7058824)
+position = Vector2(48, 61)
+texture = ExtResource("1_f8rqt")
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="Control"]
+position = Vector2(39, 61)
+shape = SubResource("RectangleShape2D_wpx6y")
+passby_press = true
+
+[node name="RightSprite" type="Sprite2D" parent="Control"]
+modulate = Color(1, 1, 1, 0.7058824)
+position = Vector2(112, 61)
+texture = ExtResource("2_uhtvp")
+
+[node name="TouchScreenButton2" type="TouchScreenButton" parent="Control"]
+position = Vector2(121, 61)
+shape = SubResource("RectangleShape2D_jqpu6")
+passby_press = true
+
+[node name="UpSprite" type="Sprite2D" parent="Control"]
+modulate = Color(1, 1, 1, 0.7058824)
+position = Vector2(80, 29)
+texture = ExtResource("3_uhtvp")
+
+[node name="TouchScreenButton3" type="TouchScreenButton" parent="Control"]
+position = Vector2(80, 26)
+shape = SubResource("RectangleShape2D_y0fgl")
+passby_press = true
+
+[node name="DownSprite" type="Sprite2D" parent="Control"]
+modulate = Color(1, 1, 1, 0.7058824)
+position = Vector2(80, 93)
+texture = ExtResource("4_f8y6k")
+
+[node name="TouchScreenButton4" type="TouchScreenButton" parent="Control"]
+position = Vector2(80, 96)
+shape = SubResource("RectangleShape2D_lds6l")
+passby_press = true
+
+[node name="SelectSprite" type="Sprite2D" parent="Control"]
+visible = false
+modulate = Color(1, 1, 1, 0.7058824)
+position = Vector2(128, 94)
+texture = ExtResource("6_puarm")
+
+[node name="TouchScreenButton5" type="TouchScreenButton" parent="Control"]
+visible = false
+position = Vector2(128, 94)
+shape = SubResource("RectangleShape2D_ycf5h")
+action = "drop_item"
+
+[node name="Control2" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -115.0
+offset_top = -141.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="ASprite" type="Sprite2D" parent="Control2"]
+modulate = Color(1, 1, 1, 0.7058824)
+position = Vector2(43, 71)
+texture = ExtResource("6_skjid")
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="Control2"]
+position = Vector2(50, 78)
+shape = SubResource("RectangleShape2D_17p43")
+passby_press = true
+action = "jump_0"
+
+[node name="TouchScreenButton3" type="TouchScreenButton" parent="Control2"]
+visible = false
+position = Vector2(23, 85)
+shape = SubResource("RectangleShape2D_yhrc3")
+passby_press = true
+action = "jump_0"
+
+[node name="BSprite" type="Sprite2D" parent="Control2"]
+modulate = Color(1, 1, 1, 0.7058824)
+position = Vector2(3, 51)
+texture = ExtResource("7_0rhtk")
+
+[node name="TouchScreenButton2" type="TouchScreenButton" parent="Control2"]
+position = Vector2(-4, 58)
+shape = SubResource("RectangleShape2D_h1250")
+action = "action_0"
+
+[node name="RunLockSprite" type="Sprite2D" parent="Control2"]
+modulate = Color(1, 1, 1, 0.7058824)
+position = Vector2(35, 32)
+texture = ExtResource("8_h1250")
+
+[node name="TouchScreenButton4" type="TouchScreenButton" parent="Control2"]
+position = Vector2(35, 32)
+shape = SubResource("RectangleShape2D_puarm")
+
+[node name="StartSprite" type="Sprite2D" parent="Control2"]
+modulate = Color(1, 1, 1, 0.7058824)
+position = Vector2(-5, 101)
+texture = ExtResource("9_yhrc3")
+
+[node name="TouchScreenButton5" type="TouchScreenButton" parent="Control2"]
+position = Vector2(-5, 101)
+shape = SubResource("RectangleShape2D_twq5y")
+action = "pause"
+
+[connection signal="pressed" from="Control/TouchScreenButton" to="." method="on_west_pressed"]
+[connection signal="released" from="Control/TouchScreenButton" to="." method="on_west_released"]
+[connection signal="pressed" from="Control/TouchScreenButton2" to="." method="on_east_pressed"]
+[connection signal="released" from="Control/TouchScreenButton2" to="." method="on_east_released"]
+[connection signal="pressed" from="Control/TouchScreenButton3" to="." method="on_north_pressed"]
+[connection signal="released" from="Control/TouchScreenButton3" to="." method="on_north_released"]
+[connection signal="pressed" from="Control/TouchScreenButton4" to="." method="on_south_pressed"]
+[connection signal="released" from="Control/TouchScreenButton4" to="." method="on_south_released"]
+[connection signal="pressed" from="Control/TouchScreenButton5" to="." method="on_select_pressed"]
+[connection signal="released" from="Control/TouchScreenButton5" to="." method="on_select_released"]
+[connection signal="pressed" from="Control2/TouchScreenButton" to="." method="on_a_pressed"]
+[connection signal="released" from="Control2/TouchScreenButton" to="." method="on_a_released"]
+[connection signal="pressed" from="Control2/TouchScreenButton3" to="." method="on_a_pressed"]
+[connection signal="released" from="Control2/TouchScreenButton3" to="." method="on_a_released"]
+[connection signal="pressed" from="Control2/TouchScreenButton2" to="." method="on_b_pressed"]
+[connection signal="released" from="Control2/TouchScreenButton2" to="." method="on_b_released"]
+[connection signal="pressed" from="Control2/TouchScreenButton4" to="." method="on_run_lock_pressed"]
+[connection signal="released" from="Control2/TouchScreenButton4" to="." method="on_run_lock_released"]
+[connection signal="pressed" from="Control2/TouchScreenButton5" to="." method="on_start_pressed"]
+[connection signal="released" from="Control2/TouchScreenButton5" to="." method="on_start_released"]
