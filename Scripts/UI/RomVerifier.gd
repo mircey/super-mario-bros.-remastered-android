@@ -11,7 +11,7 @@ func haptic_feedback() -> void:
 
 func _ready() -> void:
 	Global.get_node("GameHUD").hide()
-	Global.get_node("OnScreenControls").hide()
+	Global.hide_on_screen_controls()
 	await get_tree().physics_frame
 	#DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 	#DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
@@ -78,7 +78,7 @@ func verified() -> void:
 
 func _exit_tree() -> void:
 	Global.get_node("GameHUD").show()
-	Global.get_node("OnScreenControls").show()
+	Global.show_on_screen_controls()
 
 func create_file_pointer(file_path := "") -> void:
 	var pointer = FileAccess.open(Global.ROM_POINTER_PATH, FileAccess.WRITE)

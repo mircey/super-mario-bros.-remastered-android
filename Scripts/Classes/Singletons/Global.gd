@@ -164,6 +164,10 @@ var p_switch_timer_paused := false
 
 var debug_mode := false
 
+var controller_connected := false
+var on_screen_controls_visible := true
+@onready var on_screen_contols = $OnScreenControls
+
 func _ready() -> void:
 	current_version = get_version_number()
 	get_server_version()
@@ -195,6 +199,10 @@ func _process(delta: float) -> void:
 		AudioManager.current_level_theme = ""
 		level_theme_changed.emit()
 		log_comment("Reloaded resource packs!")
+	if Input.get_connected_joypads().size() > 0 || !on_screen_controls_visible:
+		on_screen_contols.hide()
+	else:
+		on_screen_contols.show()
 
 	handle_p_switch(delta)
 	if Input.is_key_label_pressed(KEY_F11) and debug_mode == false and OS.is_debug_build():
@@ -422,3 +430,9 @@ func sanitize_string(string := "") -> String:
 		if FONT.has_char(string.unicode_at(i)) == false and string[i] != "\n":
 			string = string.replace(string[i], " ")
 	return string
+
+func show_on_screen_controls() -> void:
+	on_screen_controls_visible = true
+
+func hide_on_screen_controls() -> void:
+	on_screen_controls_visible = false

@@ -485,6 +485,12 @@ layout_mode = 2
 text = "RESOURCE_PACK_WARNING"
 autowrap_mode = 2
 
+[node name="Label2" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/ResourcePacks"]
+modulate = Color(1, 1, 0, 1)
+layout_mode = 2
+text = "RESOURCE_PACK_WARNING_LOCATION"
+autowrap_mode = 2
+
 [node name="SelectableOptionNode" parent="PanelContainer/MarginContainer/VBoxContainer/ResourcePacks" groups=["Options"] instance=ExtResource("9_t6b48")]
 visible = false
 layout_mode = 2

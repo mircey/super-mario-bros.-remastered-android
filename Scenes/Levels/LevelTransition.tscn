@@ -137,4 +137,13 @@ script = ExtResource("10_abjth")
 labels = [NodePath("../BG/Control/World"), NodePath("../BG/Control/LivesCount"), NodePath("../BG/Control/MarathonPB"), NodePath("../BG/Control/WorldNum"), NodePath("../BG/Control/CustomLevelName"), NodePath("../BG/Control/CustomLevelAuthor")]
 metadata/_custom_type_script = "uid://dt2p68xl462v2"
 
+[node name="SkipButton" type="Button" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [connection signal="timeout" from="Timer" to="." method="transition"]
+[connection signal="pressed" from="SkipButton" to="." method="on_skip_button_pressed"]

@@ -16,7 +16,7 @@ func _enter_tree() -> void:
 func _ready() -> void:
 	Global.debugged_in = false
 	Global.get_node("GameHUD").hide()
-	Global.get_node("OnScreenControls").hide()
+	Global.hide_on_screen_controls()
 	# always display disclaimer, romverifier, resourcegenerator in original aspect ratio for aesthetic reasons
 	#DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 	#DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
@@ -27,7 +27,7 @@ func _ready() -> void:
 
 func _exit_tree() -> void:
 	Global.get_node("GameHUD").show()
-	Global.get_node("OnScreenControls").show()
+	Global.show_on_screen_controls()
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("jump_0") and can_skip:

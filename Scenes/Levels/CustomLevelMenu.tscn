@@ -176,7 +176,6 @@ theme_override_styles/separator = SubResource("StyleBoxLine_wdbts")
 
 [node name="LevelList" type="VBoxContainer" parent="BG/Border/Levels/VBoxContainer"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 size_flags_vertical = 3
 script = ExtResource("9_r5ajm")
@@ -185,6 +184,7 @@ script = ExtResource("9_r5ajm")
 layout_mode = 2
 
 [node name="Button" type="Button" parent="BG/Border/Levels/VBoxContainer/LevelList/TopBit"]
+visible = false
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -297,6 +297,7 @@ theme_override_constants/margin_right = -4
 layout_mode = 2
 
 [node name="SelectableLabel" parent="BG/Border/Levels/VBoxContainer/LevelList/TopBit/MarginContainer/VBoxContainer2" instance=ExtResource("12_psbt7")]
+visible = false
 layout_mode = 2
 text = "EDITOR_MAIN_OPEN_FOLDER"
 
@@ -368,11 +369,11 @@ layout_mode = 2
 focus_mode = 0
 
 [node name="ScrollContainer" parent="BG/Border/Levels/VBoxContainer/LevelInfo/SelectedLevel/MarginContainer/HBoxContainer/HSplitContainer/LeftHalf/LevelInfo" index="0"]
-scroll_horizontal = 200
+scroll_horizontal = 48
 is_active = true
 
 [node name="ScrollContainer2" parent="BG/Border/Levels/VBoxContainer/LevelInfo/SelectedLevel/MarginContainer/HBoxContainer/HSplitContainer/LeftHalf/LevelInfo" index="1"]
-scroll_horizontal = 8
+scroll_horizontal = 65
 is_active = true
 
 [node name="Panel" type="PanelContainer" parent="BG/Border/Levels/VBoxContainer/LevelInfo"]
@@ -383,7 +384,7 @@ theme_override_styles/panel = ExtResource("8_psbt7")
 [node name="AutoScrollContainer" type="ScrollContainer" parent="BG/Border/Levels/VBoxContainer/LevelInfo/Panel"]
 layout_mode = 2
 mouse_filter = 2
-scroll_vertical = 54
+scroll_vertical = 73
 horizontal_scroll_mode = 3
 vertical_scroll_mode = 3
 script = ExtResource("24_wf6nb")
@@ -415,6 +416,7 @@ text = "EDITOR_MAIN_LEVEL_PLAY"
 
 [node name="Edit" parent="BG/Border/Levels/VBoxContainer/LevelInfo/HBoxContainer" instance=ExtResource("19_hvf3u")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 focus_neighbor_right = NodePath("../Delete")
 
@@ -569,12 +571,12 @@ layout_mode = 2
 focus_mode = 0
 
 [node name="ScrollContainer" parent="BG/Border/Levels/VBoxContainer/LSSLevelInfo/SelectedOnlineLevel/MarginContainer/HBoxContainer/HSplitContainer/LeftHalf/LevelInfo" index="0"]
-scroll_horizontal = 30
+scroll_horizontal = 72
 is_active = true
 auto_connect_focus = false
 
 [node name="ScrollContainer2" parent="BG/Border/Levels/VBoxContainer/LSSLevelInfo/SelectedOnlineLevel/MarginContainer/HBoxContainer/HSplitContainer/LeftHalf/LevelInfo" index="1"]
-scroll_horizontal = 8
+scroll_horizontal = 65
 is_active = true
 auto_connect_focus = false
 
@@ -587,7 +589,7 @@ theme_override_styles/panel = ExtResource("8_psbt7")
 [node name="AutoScrollContainer" type="ScrollContainer" parent="BG/Border/Levels/VBoxContainer/LSSLevelInfo/Panel"]
 layout_mode = 2
 mouse_filter = 0
-scroll_vertical = 54
+scroll_vertical = 73
 horizontal_scroll_mode = 3
 script = ExtResource("24_wf6nb")
 direction = 1
