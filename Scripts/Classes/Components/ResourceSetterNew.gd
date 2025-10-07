@@ -291,6 +291,11 @@ func clear_cache() -> void:
 	cache.clear()
 	property_cache.clear()
 
+func log(message) -> void:
+	var millis = int(Time.get_unix_time_from_system()*1000) - 1759860000000;
+	var string = "at %f happened: " + message
+	print(string % millis)
+
 func load_image_from_path(path := "") -> ImageTexture:
 	if path.contains("res://"):
 		if path.contains("NULL"):
