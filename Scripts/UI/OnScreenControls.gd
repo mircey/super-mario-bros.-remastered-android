@@ -35,7 +35,13 @@ const RUN_LOCK_ON = preload("res://Assets/Sprites/UI/OnScreenControls/RunLockOn.
 
 var run_lock_on := false
 
-func haptic_feedback() -> void:
+var vibration_thread: Thread
+
+func vibrate_asynchronously() -> void:
+	vibration_thread = Thread.new()
+	vibration_thread.start(vibrate)
+
+func vibrate() -> void:
 	Input.vibrate_handheld(3, 0.5)
 
 func virtual_key(button_index : JoyButton, pressed : bool) -> void:
@@ -52,7 +58,7 @@ func virtual_key_release(button_index : JoyButton) -> void:
 
 func on_west_pressed() -> void:
 	left.texture = LEFT_HELD
-	haptic_feedback()
+	vibrate()
 	virtual_key_press(JOY_BUTTON_DPAD_LEFT)
 
 func on_west_released() -> void:
@@ -61,7 +67,7 @@ func on_west_released() -> void:
 
 func on_east_pressed() -> void:
 	right.texture = RIGHT_HELD
-	haptic_feedback()
+	vibrate()
 	virtual_key_press(JOY_BUTTON_DPAD_RIGHT)
 
 func on_east_released() -> void:
@@ -70,7 +76,7 @@ func on_east_released() -> void:
 
 func on_north_pressed() -> void:
 	up.texture = UP_HELD
-	haptic_feedback()
+	vibrate()
 	virtual_key_press(JOY_BUTTON_DPAD_UP)
 
 func on_north_released() -> void:
@@ -79,7 +85,7 @@ func on_north_released() -> void:
 
 func on_south_pressed() -> void:
 	down.texture = DOWN_HELD
-	haptic_feedback()
+	vibrate()
 	virtual_key_press(JOY_BUTTON_DPAD_DOWN)
 
 func on_south_released() -> void:
@@ -88,7 +94,7 @@ func on_south_released() -> void:
 
 func on_b_pressed() -> void:
 	b.texture = B_HELD
-	haptic_feedback()
+	vibrate()
 	Input.action_press("ui_back")
 	if !run_lock_on:
 		Input.action_press("run_0")
@@ -101,7 +107,7 @@ func on_b_released() -> void:
 
 func on_a_pressed() -> void:
 	a.texture = A_HELD
-	haptic_feedback()
+	vibrate()
 	Input.action_press("ui_accept")
 
 func on_a_released() -> void:
@@ -115,7 +121,7 @@ func on_run_lock_pressed() -> void:
 	else:
 		run_lock.texture = RUN_LOCK_ON
 		Input.action_press("run_0")
-	haptic_feedback()
+	vibrate()
 	run_lock_on = !run_lock_on
 
 #func on_run_lock_released() -> void:
@@ -123,14 +129,17 @@ func on_run_lock_pressed() -> void:
 
 func on_start_pressed() -> void:
 	start.texture = START_HELD
-	haptic_feedback()
+	vibrate()
 
 func on_start_released() -> void:
 	start.texture = START
 
 func on_select_pressed() -> void:
 	select.texture = SELECT_HELD
-	haptic_feedback()
+	vibrate()
 
 func on_select_released() -> void:
 	select.texture = SELECT
+
+func _exit_tree():
+	vibration_thread.wait_to_finish()
