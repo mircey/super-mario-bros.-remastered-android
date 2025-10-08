@@ -36,8 +36,8 @@ const RUN_LOCK_ON = preload("res://Assets/Sprites/UI/OnScreenControls/RunLockOn.
 var run_lock_on := false
 
 var vibration_thread: Thread
-var last_vibrate_time: float = 0.0
-var vibrate_cooldown: float = 0.1
+#var last_vibrate_time: float = 0.0
+#var vibrate_cooldown: float = 0.1
 
 func vibrate_asynchronously() -> void:
 	#call_deferred("vibrate")
@@ -47,10 +47,10 @@ func vibrate_asynchronously() -> void:
 	vibration_thread.start(vibrate)
 
 func vibrate() -> void:
-	var current_time = Time.get_ticks_msec() / 1000.0
-	if current_time - last_vibrate_time < vibrate_cooldown:
-		return
-	last_vibrate_time = current_time
+	#var current_time = Time.get_ticks_msec() / 1000.0
+	#if current_time - last_vibrate_time < vibrate_cooldown:
+	#	return
+	#last_vibrate_time = current_time
 	Input.vibrate_handheld(3, 0.5)
 
 func virtual_key(button_index : JoyButton, pressed : bool) -> void:
@@ -67,7 +67,7 @@ func virtual_key_release(button_index : JoyButton) -> void:
 
 func on_west_pressed() -> void:
 	left.texture = LEFT_HELD
-	vibrate()
+	vibrate_asynchronously()
 	virtual_key_press(JOY_BUTTON_DPAD_LEFT)
 
 func on_west_released() -> void:
@@ -76,7 +76,7 @@ func on_west_released() -> void:
 
 func on_east_pressed() -> void:
 	right.texture = RIGHT_HELD
-	vibrate()
+	vibrate_asynchronously()
 	virtual_key_press(JOY_BUTTON_DPAD_RIGHT)
 
 func on_east_released() -> void:
@@ -85,7 +85,7 @@ func on_east_released() -> void:
 
 func on_north_pressed() -> void:
 	up.texture = UP_HELD
-	vibrate()
+	vibrate_asynchronously()
 	virtual_key_press(JOY_BUTTON_DPAD_UP)
 
 func on_north_released() -> void:
@@ -94,7 +94,7 @@ func on_north_released() -> void:
 
 func on_south_pressed() -> void:
 	down.texture = DOWN_HELD
-	vibrate()
+	vibrate_asynchronously()
 	virtual_key_press(JOY_BUTTON_DPAD_DOWN)
 
 func on_south_released() -> void:
@@ -103,7 +103,7 @@ func on_south_released() -> void:
 
 func on_b_pressed() -> void:
 	b.texture = B_HELD
-	vibrate()
+	vibrate_asynchronously()
 	Input.action_press("ui_back")
 	if !run_lock_on:
 		Input.action_press("run_0")
@@ -116,7 +116,7 @@ func on_b_released() -> void:
 
 func on_a_pressed() -> void:
 	a.texture = A_HELD
-	vibrate()
+	vibrate_asynchronously()
 	Input.action_press("ui_accept")
 
 func on_a_released() -> void:
@@ -130,7 +130,7 @@ func on_run_lock_pressed() -> void:
 	else:
 		run_lock.texture = RUN_LOCK_ON
 		Input.action_press("run_0")
-	vibrate()
+	vibrate_asynchronously()
 	run_lock_on = !run_lock_on
 
 #func on_run_lock_released() -> void:
@@ -138,14 +138,14 @@ func on_run_lock_pressed() -> void:
 
 func on_start_pressed() -> void:
 	start.texture = START_HELD
-	vibrate()
+	vibrate_asynchronously()
 
 func on_start_released() -> void:
 	start.texture = START
 
 func on_select_pressed() -> void:
 	select.texture = SELECT_HELD
-	vibrate()
+	vibrate_asynchronously()
 
 func on_select_released() -> void:
 	select.texture = SELECT
