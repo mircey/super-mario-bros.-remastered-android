@@ -36,21 +36,14 @@ const RUN_LOCK_ON = preload("res://Assets/Sprites/UI/OnScreenControls/RunLockOn.
 var run_lock_on := false
 
 var vibration_thread: Thread
-#var last_vibrate_time: float = 0.0
-#var vibrate_cooldown: float = 0.1
 
 func vibrate_asynchronously() -> void:
-	#call_deferred("vibrate")
 	if vibration_thread != null and vibration_thread.is_alive():
 		return
 	vibration_thread = Thread.new()
 	vibration_thread.start(vibrate)
 
 func vibrate() -> void:
-	#var current_time = Time.get_ticks_msec() / 1000.0
-	#if current_time - last_vibrate_time < vibrate_cooldown:
-	#	return
-	#last_vibrate_time = current_time
 	Input.vibrate_handheld(3, 0.5)
 
 func virtual_key(button_index : JoyButton, pressed : bool) -> void:
@@ -153,4 +146,3 @@ func on_select_released() -> void:
 func _exit_tree():
 	if vibration_thread != null and vibration_thread.is_alive():
 		vibration_thread.wait_to_finish()
-#	vibration_thread.wait_to_finish()
