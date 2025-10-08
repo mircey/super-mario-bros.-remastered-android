@@ -35,11 +35,12 @@ const RUN_LOCK_ON = preload("res://Assets/Sprites/UI/OnScreenControls/RunLockOn.
 
 var run_lock_on := false
 
-var vibration_thread: Thread
+#var vibration_thread: Thread
 
 func vibrate_asynchronously() -> void:
-	vibration_thread = Thread.new()
-	vibration_thread.start(vibrate)
+	call_deferred("vibrate")
+	#vibration_thread = Thread.new()
+	#vibration_thread.start(vibrate)
 
 func vibrate() -> void:
 	Input.vibrate_handheld(3, 0.5)
@@ -141,5 +142,5 @@ func on_select_pressed() -> void:
 func on_select_released() -> void:
 	select.texture = SELECT
 
-func _exit_tree():
-	vibration_thread.wait_to_finish()
+#func _exit_tree():
+#	vibration_thread.wait_to_finish()
