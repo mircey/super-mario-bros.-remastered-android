@@ -2,7 +2,7 @@ extends Node
 
 var file := {
 	"video": {
-		"mode": 2,
+		"mode": 1,
 		"size": 1,
 		"vsync": 1,
 		"drop_shadows": 1,
@@ -84,6 +84,12 @@ func _enter_tree() -> void:
 	load_settings()
 	await get_tree().physics_frame
 	apply_settings()
+	# dirty fix
+	#var size = file.video.size
+	#Settings.refresh_window_size(2)
+	#print(file.video.size)
+	#Settings.refresh_window_size(size)
+	#print(file.video.size)
 	TranslationServer.set_locale(Settings.file.game.lang)
 
 func save_settings() -> void:
@@ -111,3 +117,6 @@ func apply_settings() -> void:
 		$Apply/Audio.set_value(i, file.audio[i])
 	if Settings.file.game.has("characters"):
 		Global.player_characters = Settings.file.game.characters
+
+func refresh_window_size(value) -> void:
+	$Apply/Video.set_value("size", value)

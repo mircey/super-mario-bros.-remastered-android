@@ -34,12 +34,20 @@ const RUN_LOCK_ON = preload("res://Assets/Sprites/UI/OnScreenControls/RunLockOn.
 @onready var run_lock = $Control2/RunLockSprite
 
 var run_lock_on := false
-
 var vibration_thread: Thread
+var should_show := false
+
+func _process(_delta : float) -> void:
+	if Input.get_connected_joypads().size() > 0 || !should_show:
+		hide()
+	else:
+		show()
 
 func vibrate_asynchronously() -> void:
-	if vibration_thread != null and vibration_thread.is_alive():
-		return
+	if vibration_thread != null:
+		if vibration_thread.is_alive():
+			return
+		vibration_thread.wait_to_finish()
 	vibration_thread = Thread.new()
 	vibration_thread.start(vibrate)
 
@@ -110,11 +118,11 @@ func on_b_released() -> void:
 func on_a_pressed() -> void:
 	a.texture = A_HELD
 	vibrate_asynchronously()
-	Input.action_press("ui_accept")
+	virtual_key_press(JOY_BUTTON_A)
 
 func on_a_released() -> void:
 	a.texture = A
-	Input.action_release("ui_accept")
+	virtual_key_release(JOY_BUTTON_A)
 
 func on_run_lock_pressed() -> void:
 	if run_lock_on:
@@ -125,9 +133,6 @@ func on_run_lock_pressed() -> void:
 		Input.action_press("run_0")
 	vibrate_asynchronously()
 	run_lock_on = !run_lock_on
-
-#func on_run_lock_released() -> void:
-#	pass # Replace with function body.
 
 func on_start_pressed() -> void:
 	start.texture = START_HELD

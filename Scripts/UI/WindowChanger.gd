@@ -6,18 +6,24 @@ func window_mode_changed(new_value := 0) -> void:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
 		1:
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, true)
-		2:
-			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, true)
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, true)
+		#2:
+			#DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, true)
+			#DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	Settings.file.video.mode = new_value
 
 func null_function(_fuck_you := 0) -> void:
 	pass
 
 func window_size_changed(new_value := 0) -> void:
-	get_tree().root.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_EXPAND if new_value == 1 else Window.CONTENT_SCALE_ASPECT_KEEP
+	#get_tree().root.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_EXPAND if new_value == 1 else Window.CONTENT_SCALE_ASPECT_KEEP
+	var game_viewport_container : SubViewportContainer = get_tree().root.get_node("Wrapper/CenterContainer/SubViewportContainer")
+	var game_viewport : SubViewport = get_tree().root.get_node("Wrapper/CenterContainer/SubViewportContainer/SubViewport")
+	var x = round((240.0 / DisplayServer.screen_get_size().y) * DisplayServer.screen_get_size().x) if new_value == 2 else 384 if new_value == 1 else 256
+	game_viewport.size.x = x
+	game_viewport_container.size.x = x
+	
 	Settings.file.video.size = new_value
 
 func vsync_changed(new_value := 0) -> void:

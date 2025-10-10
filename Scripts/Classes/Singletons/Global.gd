@@ -173,8 +173,12 @@ func _ready() -> void:
 	get_server_version()
 	if OS.is_debug_build():
 		debug_mode = false
-	setup_discord_rpc()
+	#setup_discord_rpc()
 	check_for_rom()
+	await get_tree().process_frame  # Wait for scene tree to be ready
+	var game_viewport = get_tree().root.get_node("Wrapper/CenterContainer/SubViewportContainer/SubViewport")
+	if game_viewport:
+		reparent(game_viewport)
 
 func check_for_rom() -> void:
 	if FileAccess.file_exists(Global.ROM_PATH) == false:
@@ -199,10 +203,6 @@ func _process(delta: float) -> void:
 		AudioManager.current_level_theme = ""
 		level_theme_changed.emit()
 		log_comment("Reloaded resource packs!")
-	if Input.get_connected_joypads().size() > 0 || !on_screen_controls_visible:
-		on_screen_contols.hide()
-	else:
-		on_screen_contols.show()
 
 	handle_p_switch(delta)
 	if Input.is_key_label_pressed(KEY_F11) and debug_mode == false and OS.is_debug_build():
@@ -298,8 +298,10 @@ func transition_to_scene(scene_path := "") -> void:
 		%TransitionBlock.modulate.a = 1
 		$Transition.show()
 		await get_tree().create_timer(0.1, true).timeout
-	get_tree().change_scene_to_file(scene_path)
-	await get_tree().scene_changed
+	#get_tree().change_scene_to_file(scene_path)
+	#await get_tree().scene_changed
+	var wrapper = get_tree().root.get_node("Wrapper")
+	wrapper.change_scene_to(scene_path)
 	await get_tree().create_timer(0.15, true).timeout
 	if fade_transition:
 		$Transition/AnimationPlayer.play_backwards("FadeIn")

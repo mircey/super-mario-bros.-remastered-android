@@ -42,6 +42,7 @@ size = Vector2(44, 24)
 size = Vector2(24, 24)
 
 [node name="OnScreenControls" type="CanvasLayer"]
+process_mode = 3
 script = ExtResource("1_sxebv")
 
 [node name="Control" type="Control" parent="."]
@@ -126,7 +127,6 @@ texture = ExtResource("6_skjid")
 position = Vector2(50, 78)
 shape = SubResource("RectangleShape2D_17p43")
 passby_press = true
-action = "jump_0"
 
 [node name="TouchScreenButton3" type="TouchScreenButton" parent="Control2"]
 visible = false
@@ -181,6 +181,5 @@ action = "pause"
 [connection signal="pressed" from="Control2/TouchScreenButton2" to="." method="on_b_pressed"]
 [connection signal="released" from="Control2/TouchScreenButton2" to="." method="on_b_released"]
 [connection signal="pressed" from="Control2/TouchScreenButton4" to="." method="on_run_lock_pressed"]
-[connection signal="released" from="Control2/TouchScreenButton4" to="." method="on_run_lock_released"]
 [connection signal="pressed" from="Control2/TouchScreenButton5" to="." method="on_start_pressed"]
 [connection signal="released" from="Control2/TouchScreenButton5" to="." method="on_start_released"]

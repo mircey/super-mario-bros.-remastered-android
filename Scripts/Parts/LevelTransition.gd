@@ -27,7 +27,7 @@ static var level_to_transition_to := "res://Scenes/Levels/World1/1-1.tscn":
 @export var text_shadows: Array[Label] = []
 
 func _ready() -> void:
-	Global.hide_on_screen_controls()
+	OnScreenControls.should_show = false
 	WarpPipeArea.has_warped = false
 	Global.level_theme = "Underground"
 	$BG/Control/MarathonPB.visible = Global.current_game_mode == Global.GameMode.MARATHON_PRACTICE
@@ -115,7 +115,7 @@ func _process(_delta: float) -> void:
 
 func _exit_tree() -> void:
 	Global.death_load = false
-	Global.show_on_screen_controls()
+	OnScreenControls.should_show = true
 
 func on_skip_button_pressed() -> void:
 	if can_transition:

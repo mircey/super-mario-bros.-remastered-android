@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3e1cch72jsyh"]
+
+[ext_resource type="Script" uid="uid://dh7grnx1ieta7" path="res://Scripts/Wrapper.gd" id="1_k5vsa"]
+
+[node name="Wrapper" type="Node2D"]
+script = ExtResource("1_k5vsa")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+offset_right = 256.0
+offset_bottom = 240.0
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="CenterContainer/SubViewportContainer"]
+handle_input_locally = false
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+size = Vector2i(256, 240)
+render_target_update_mode = 4

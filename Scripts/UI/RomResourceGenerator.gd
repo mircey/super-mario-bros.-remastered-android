@@ -6,7 +6,7 @@ extends AssetRipper
 
 func _ready() -> void:
 	Global.get_node("GameHUD").hide()
-	Global.hide_on_screen_controls()
+	OnScreenControls.should_show = false
 	
 	rom = FileAccess.get_file_as_bytes(Global.ROM_PATH)
 	prg_rom_size = rom[4] * 16384
@@ -16,10 +16,7 @@ func _ready() -> void:
 
 func _exit_tree() -> void:
 	Global.get_node("GameHUD").show()
-	Global.show_on_screen_controls()
-	#get_tree().root.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_EXPAND
-	#Settings.file.video.size = 1
-
+	OnScreenControls.should_show = true
 
 
 func done() -> void:

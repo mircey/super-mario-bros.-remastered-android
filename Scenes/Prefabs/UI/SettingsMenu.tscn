@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" uid="uid://cj6858gmexp11" path="res://Scripts/UI/SettingsMenu.gd" id="1_hnwhb"]
 [ext_resource type="StyleBox" uid="uid://comkghpj0djcl" path="res://Resources/UI/Panel.tres" id="2_t6b48"]
-[ext_resource type="Texture2D" uid="uid://0ffyi283pret" path="res://Assets/Sprites/UI/SettingsIcon.png" id="3_7l5ko"]
+[ext_resource type="Texture2D" uid="uid://0ffyi283pret" path="res://Modernized/Sprites/UI/SettingsIcon.png" id="3_7l5ko"]
 [ext_resource type="PackedScene" uid="uid://dbvy0rhwpv4w4" path="res://Scenes/Parts/SelectableOptionNode.tscn" id="3_dl6kk"]
 [ext_resource type="Script" uid="uid://dcmjifllvi3qd" path="res://Scripts/UI/SettingsCategory.gd" id="4_avtty"]
 [ext_resource type="Script" uid="uid://26yissv8bnqw" path="res://Scripts/UI/WindowChanger.gd" id="5_hnwhb"]
-[ext_resource type="Texture2D" uid="uid://deooy8040yx2u" path="res://Assets/Sprites/UI/LocaleFlags.png" id="5_q6iis"]
+[ext_resource type="Texture2D" uid="uid://deooy8040yx2u" path="res://Modernized/Sprites/UI/LocaleFlags.png" id="5_q6iis"]
 [ext_resource type="PackedScene" uid="uid://dtiqcfrw110kd" path="res://Scenes/Parts/SelectableSliderNode.tscn" id="7_om3lc"]
 [ext_resource type="Script" uid="uid://bdgvsycico544" path="res://Scripts/UI/AudioAdjuster.gd" id="8_yclde"]
 [ext_resource type="Script" uid="uid://idiqu54si1n4" path="res://Scripts/Parts/ResourcePackLoader.gd" id="9_2qqpf"]
@@ -276,13 +276,13 @@ region_rect = Rect2(0, 0, 16, 16)
 layout_mode = 2
 option_key = "mode"
 title = "VIDEO_MODE"
-values = ["VIDEO_MODE_WINDOWED", "VIDEO_MODE_BORDERLESS", "VIDEO_MODE_FULLSCREEN"]
+values = ["VIDEO_MODE_WINDOWED", "VIDEO_MODE_FULLSCREEN"]
 
 [node name="Size" parent="PanelContainer/MarginContainer/VBoxContainer/Video" groups=["Options"] instance=ExtResource("3_dl6kk")]
 layout_mode = 2
 option_key = "size"
 title = "VIDEO_SIZE"
-values = ["VIDEO_ASPECT_OG", "VIDEO_ASPECT_WIDE"]
+values = ["VIDEO_ASPECT_OG", "VIDEO_ASPECT_16_10", "VIDEO_ASPECT_FILL"]
 selected = true
 
 [node name="Visuals" parent="PanelContainer/MarginContainer/VBoxContainer/Video" groups=["Options"] instance=ExtResource("3_dl6kk")]
