@@ -27,7 +27,7 @@ i just spent >71 hours across 7 days on porting this amazing game to android!! i
 
 ## download
 
-get the latest version here!
+get the latest version [here](https://github.com/mircey/super-mario-bros.-remastered-android/releases/download/1/smb1r-android-arm64-1.apk)!
 
 # how to contribute
 
