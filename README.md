@@ -1,12 +1,12 @@
 # super mario bros. remastered android
 this is an android port of the [Super Mario Bros. Remaster](https://github.com/JHDev2006/Super-Mario-Bros.-Remastered-Public) by [JoeMama](https://github.com/JHDev2006) and [their team](https://github.com/JHDev2006/Super-Mario-Bros.-Remastered-Public/graphs/contributors). as of release, this port is nearly feature complete.
 
-i just spent >71 hours across 7 days on porting this amazing game to android!! if you enjoy the result of my latest obsession, please consider leaving me a tip or buying me a coffee <3 !!
+i just spent >71 hours across 7 days on porting this amazing game to android!! if you enjoy the result of my latest obsession, please consider [leaving me a tip](https://ko-fi.com/mircey) or [buying me a coffee](https://buymeacoffee.com/mircey) <3 !!
 
 <p float="left">
-  <a href="https://ko-fi.com/mircey"><img width="160" alt="crying emoji" src="https://github.com/user-attachments/assets/afdab743-7f81-4648-b87e-316a48fa5b87" /></a>
-  <a href="#"><img width="160" alt="thrilled" src="https://github.com/user-attachments/assets/9789b502-579c-435d-939a-1643f7540c04" /></a>
-  <a href="https://buymeacoffee.com/mircey"><img width="160" alt="please" src="https://github.com/user-attachments/assets/1395ce96-0e2a-4a31-863c-77ac3b98fddd" /></a>
+  <!--<a href="https://ko-fi.com/mircey"><img width="160" alt="crying emoji" src="https://github.com/user-attachments/assets/afdab743-7f81-4648-b87e-316a48fa5b87" /></a>-->
+  <a href="https://ko-fi.com/mircey"><img width="160" alt="thrilled" src="https://github.com/user-attachments/assets/9789b502-579c-435d-939a-1643f7540c04" /></a>
+  <!--<a href="https://buymeacoffee.com/mircey"><img width="160" alt="please" src="https://github.com/user-attachments/assets/1395ce96-0e2a-4a31-863c-77ac3b98fddd" /></a>-->
 </p>
 
 ## features
