@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://bn66tnn8nlpi7"]
 
 [ext_resource type="Script" uid="uid://bjsdmqxwrb6sd" path="res://Scripts/Parts/Disclaimer.gd" id="1_esyiu"]
-[ext_resource type="AudioStream" uid="uid://o8wqcv7gjfkn" path="res://Modernized/Audio/SFX/Pause.wav" id="3_x4k0q"]
-[ext_resource type="AudioStream" uid="uid://02i3v6iqndob" path="res://Modernized/Audio/SFX/Bump.wav" id="4_j7oxo"]
-[ext_resource type="AudioStream" uid="uid://b2i8bjhlcvruw" path="res://Modernized/Audio/SFX/Coin.wav" id="5_ou832"]
+[ext_resource type="AudioStream" uid="uid://o8wqcv7gjfkn" path="res://Assets/Audio/SFX/Pause.wav" id="3_x4k0q"]
+[ext_resource type="AudioStream" uid="uid://02i3v6iqndob" path="res://Assets/Audio/SFX/Bump.wav" id="4_j7oxo"]
+[ext_resource type="AudioStream" uid="uid://b2i8bjhlcvruw" path="res://Assets/Audio/SFX/Coin.wav" id="5_ou832"]
 
 [sub_resource type="Animation" id="Animation_j7oxo"]
 resource_name = "Go"
