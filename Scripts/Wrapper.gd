@@ -7,7 +7,9 @@ var thread : Thread
 
 func _ready() -> void:
 	await get_tree().process_frame
-	center_container.size.x = round((240.0 / DisplayServer.screen_get_size().y) * DisplayServer.screen_get_size().x)
+	var width = round((240.0 / DisplayServer.screen_get_size().y) * DisplayServer.screen_get_size().x)
+	center_container.size.x = width
+	print("Wrapper/width: ", width)
 	await change_scene_to("res://Scenes/Levels/Disclaimer.tscn")
 
 func change_scene_to(path) -> void:

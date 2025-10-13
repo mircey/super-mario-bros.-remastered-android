@@ -37,11 +37,18 @@ var run_lock_on := false
 var vibration_thread: Thread
 var should_show := false
 
+# debug cooldown of 5 seconds at 60 fps, 2,5 seconds at 120 fps
+var counter := 300
+
 func _process(_delta : float) -> void:
 	if Input.get_connected_joypads().size() > 0 || !should_show:
 		hide()
+		if counter == 300:
+			print("Input/get_connected_joypads(): ", Input.get_connected_joypads())
+			print("OnScreenControls/should_show: ")
 	else:
 		show()
+	counter = counter - 1 if counter > 0 else 300
 
 func vibrate_asynchronously() -> void:
 	if vibration_thread != null:

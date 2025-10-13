@@ -21,6 +21,7 @@ func window_size_changed(new_value := 0) -> void:
 	var game_viewport_container : SubViewportContainer = get_tree().root.get_node("Wrapper/CenterContainer/SubViewportContainer")
 	var game_viewport : SubViewport = get_tree().root.get_node("Wrapper/CenterContainer/SubViewportContainer/SubViewport")
 	var x = round((240.0 / DisplayServer.screen_get_size().y) * DisplayServer.screen_get_size().x) if new_value == 2 else 384 if new_value == 1 else 256
+	print("WindowChanger/x: ", x)
 	game_viewport.size.x = x
 	game_viewport_container.size.x = x
 	
