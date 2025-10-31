@@ -13,7 +13,7 @@ func _ready() -> void:
 	Global.get_node("GameHUD").hide()
 	OnScreenControls.should_show = false
 	await get_tree().physics_frame
-	android_picker = Engine.get_singleton("GodotFilePicker")
+	android_picker = Engine.get_singleton("AndroidFilePicker")
 	android_picker.file_picked.connect(on_file_selected)
 
 func on_screen_tapped() -> void:

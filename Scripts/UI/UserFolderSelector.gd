@@ -3,7 +3,7 @@ extends Node
 
 const VALID_HASH := "c9b34443c0414f3b91ef496d8cfee9fdd72405d673985afa11fb56732c96152b"
 
-var android_access_granter
+var android_picker
 
 var initial_campaign := "SMB1"
 
@@ -18,16 +18,18 @@ func _ready() -> void:
 	Global.get_node("GameHUD").hide()
 	OnScreenControls.should_show = false
 	await get_tree().physics_frame
-	android_access_granter = Engine.get_singleton("AndroidDirectoryAccessGranter")
-	android_access_granter.directory_access_granted.connect(on_directory_access_granted)
+	#print("Available singletons: ", Engine.get_singleton_list())
+	android_picker = Engine.get_singleton("AndroidFilePicker")
+	android_picker.directory_picked.connect(on_directory_selected)
 
 func on_screen_tapped() -> void:
 	haptic_feedback()
-	android_access_granter.openDirectory("") # does open up as intended
+	android_picker.openDirectoryPicker("")
 
-func on_directory_access_granted(folder_path: String) -> void:
-	print("folder selected!!!: ", folder_path) # is never reached
-	#verified()
+func on_directory_selected(directory_uri: String) -> void:
+	print("folder picked!!!: ", directory_uri)
+	verified()
+	# TODO do stuff with the path
 
 func error() -> void:
 	%Error.show()
@@ -38,12 +40,13 @@ func verified() -> void:
 	%DefaultText.queue_free()
 	%SuccessMSG.show()
 	$SuccessSFX.play()
-	#await get_tree().create_timer(3, false).timeout
-	#if not Global.rom_assets_exist:
-		#Global.transition_to_scene("res://Scenes/Levels/RomResourceGenerator.tscn")
-	#else:
-		#Global.transition_to_scene("res://Scenes/Levels/TitleScreen.tscn")
-	Global.transition_to_scene("res://Scenes/Levels/RomVerifier.tscn")
+	await get_tree().create_timer(3, false).timeout
+	if Global.rom_path == "":
+		Global.transition_to_scene("res://Scenes/Levels/RomVerifier.tscn")
+	elif not Global.rom_assets_exist:
+		Global.transition_to_scene("res://Scenes/Levels/RomResourceGenerator.tscn")
+	else:
+		Global.transition_to_scene("res://Scenes/Levels/TitleScreen.tscn")
 
 func _exit_tree() -> void:
 	Global.get_node("GameHUD").show()

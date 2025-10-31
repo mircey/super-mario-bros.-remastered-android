@@ -7,7 +7,7 @@ var file := {
 		"vsync": 1,
 		"drop_shadows": 1,
 		"scaling": 1,
-		"visuals": 0,
+		"visuals": 1,
 		"hud_size": 0
 	},
 	"audio": {
