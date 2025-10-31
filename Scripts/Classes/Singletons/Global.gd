@@ -174,12 +174,14 @@ func _ready() -> void:
 	if OS.is_debug_build():
 		debug_mode = false
 	#setup_discord_rpc()
-	check_for_rom()
+	#check_for_rom()
 	
 	await get_tree().process_frame  # Wait for scene tree to be ready
 	var game_viewport = get_tree().root.get_node("Wrapper/CenterContainer/SubViewportContainer/SubViewport")
 	if game_viewport:
 		reparent(game_viewport)
+	Global.transition_to_scene("res://Scenes/Levels/TitleScreen.tscn")
+	
 
 func check_for_rom() -> void:
 	

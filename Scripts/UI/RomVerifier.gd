@@ -14,8 +14,6 @@ func _ready() -> void:
 	OnScreenControls.should_show = false
 	await get_tree().physics_frame
 	android_picker = Engine.get_singleton("GodotFilePicker")
-	on_screen_tapped()
-	android_picker.openFilePicker("*/*")
 	android_picker.file_picked.connect(on_file_selected)
 
 func on_screen_tapped() -> void:
