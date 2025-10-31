@@ -46,7 +46,7 @@ func _process(_delta : float) -> void:
 		connected.append(0)
 		
 		if !connected[1]:
-			print("sussy baka")
+			print("connected[1] is 0")
 		else:
 			hide()
 		if counter == 300:
