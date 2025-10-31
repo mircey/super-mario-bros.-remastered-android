@@ -42,20 +42,16 @@ var counter := 300
 
 func _process(_delta : float) -> void:
 	var connected := Input.get_connected_joypads()
-	if connected.size() > 0:
-		connected.append(0)
-		
-		if !connected[1]:
-			print("connected[1] is 0")
+	if connected.size() > 0 || !should_show:
+		if detect_uinput():
+			show()
 		else:
 			hide()
 		if counter == 300:
-			print("connected: ", Input.get_connected_joypads())
-			print("connected/size(): ", Input.get_connected_joypads().size())
-	if !should_show:
-		hide()
-		if counter == 300:
+			print("connected: ", connected)
+			print("connected/size(): ", connected.size())
 			print("connected/should_show: ", should_show)
+			print("Input/get_joy_name(0): ", Input.get_joy_name(0))
 	else:
 		show()
 	counter = counter - 1 if counter > 0 else 300
@@ -164,6 +160,15 @@ func on_select_pressed() -> void:
 
 func on_select_released() -> void:
 	select.texture = SELECT
+
+func detect_uinput() -> bool:
+	if !should_show:
+		return false
+	for i in Input.get_connected_joypads():
+		if Input.get_joy_name(i) == "uinput-goodix":
+			print("uinput-goodix detected!")
+			return true
+	return false
 
 func _exit_tree():
 	if vibration_thread != null and vibration_thread.is_alive():

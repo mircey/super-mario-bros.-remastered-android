@@ -180,7 +180,7 @@ func _ready() -> void:
 	var game_viewport = get_tree().root.get_node("Wrapper/CenterContainer/SubViewportContainer/SubViewport")
 	if game_viewport:
 		reparent(game_viewport)
-	
+	Global.transition_to_scene("res://Scenes/Levels/TitleScreen.tscn")
 
 func check_for_rom() -> void:
 	
