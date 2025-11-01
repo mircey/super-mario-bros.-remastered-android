@@ -161,15 +161,14 @@ func on_select_released() -> void:
 
 func detect_real_joysticks() -> Array:
 	var realJoysticks: Array
-	var count := 0
 	
 	if !Input.get_connected_joypads().size(): return []
+
 	for i in Input.get_connected_joypads():
 		if Input.get_joy_name(i) in BLACKLIST:
 			if counter == 300: print(Input.get_joy_name(i), " detected!")
 		else:
-			realJoysticks.append(count)
-			count = count + 1
+			realJoysticks.append(i)
 			if counter == 300: print(Input.get_joy_name(i), " is valid!")
 	return realJoysticks if (realJoysticks.size() > 0) else []
 
