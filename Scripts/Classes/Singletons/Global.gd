@@ -182,7 +182,6 @@ func _ready() -> void:
 		reparent(game_viewport)
 
 func check_for_rom() -> void:
-	
 	if FileAccess.file_exists(Global.ROM_PATH) == false:
 		return
 	var path = Global.ROM_PATH 
