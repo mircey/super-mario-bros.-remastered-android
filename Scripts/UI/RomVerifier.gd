@@ -18,7 +18,7 @@ func _ready() -> void:
 
 func on_screen_tapped() -> void:
 	haptic_feedback()
-	android_picker.openFilePicker("*/*")
+	android_picker.openFilePicker("")
 
 func on_file_selected(temp_path: String, mime_type: String) -> void:
 	if is_valid_rom(temp_path):

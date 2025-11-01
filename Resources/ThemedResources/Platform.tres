@@ -1,17 +1,13 @@
-[gd_resource type="Resource" script_class="ThemedResource" load_steps=16 format=3 uid="uid://8kt7ubo0xk7y"]
+[gd_resource type="Resource" script_class="ThemedResource" load_steps=14 format=3 uid="uid://8kt7ubo0xk7y"]
 
-[ext_resource type="Texture2D" uid="uid://bk0p52ttwojml" path="res://Assets/Sprites/Tilesets/Platform.png" id="1_md2y0"]
-[ext_resource type="Texture2D" uid="uid://dydljla7iancf" path="res://Assets/Sprites/Tilesets/LLPlatform.png" id="2_g4u7w"]
 [ext_resource type="Script" uid="uid://cixtosud3mfaq" path="res://Scripts/Classes/Resources/CampaignResource.gd" id="3_pafac"]
 [ext_resource type="Script" uid="uid://c21q47h7too1w" path="res://Scripts/Classes/Resources/ColourPaletteResource.gd" id="4_g4u7w"]
 [ext_resource type="Script" uid="uid://cmvlgsjmsk0v5" path="res://Scripts/Classes/Resources/ThemedResource.gd" id="4_q2jud"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g58l4"]
-atlas = ExtResource("1_md2y0")
 region = Rect2(0, 0, 16, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xaub6"]
-atlas = ExtResource("2_g4u7w")
 region = Rect2(0, 0, 8, 8)
 
 [sub_resource type="Resource" id="Resource_xaub6"]
@@ -21,11 +17,9 @@ SMBLL = SubResource("AtlasTexture_xaub6")
 metadata/_custom_type_script = ExtResource("3_pafac")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pafac"]
-atlas = ExtResource("1_md2y0")
 region = Rect2(0, 8, 16, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q2jud"]
-atlas = ExtResource("1_md2y0")
 region = Rect2(0, 0, 16, 8)
 
 [sub_resource type="Resource" id="Resource_w4dd3"]
@@ -35,11 +29,9 @@ NES = SubResource("AtlasTexture_q2jud")
 metadata/_custom_type_script = "uid://c21q47h7too1w"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6dmlt"]
-atlas = ExtResource("2_g4u7w")
 region = Rect2(0, 8, 8, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lisp3"]
-atlas = ExtResource("2_g4u7w")
 region = Rect2(0, 0, 8, 8)
 
 [sub_resource type="Resource" id="Resource_lp4kx"]
