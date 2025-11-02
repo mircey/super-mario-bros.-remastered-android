@@ -1,7 +1,5 @@
 # super mario bros. remastered android
-this is an android port of the [Super Mario Bros. Remaster](https://github.com/JHDev2006/Super-Mario-Bros.-Remastered-Public) by [JoeMama](https://github.com/JHDev2006) and [their team](https://github.com/JHDev2006/Super-Mario-Bros.-Remastered-Public/graphs/contributors). as of release, this port is nearly feature complete.
-
-i just spent >71 hours across 7 days on porting this amazing game to android!! if you enjoy the result of my latest obsession, please consider [leaving me a tip](https://ko-fi.com/mircey) or [buying me a coffee](https://buymeacoffee.com/mircey) <3 !!
+this is an android port of the [Super Mario Bros. Remaster](https://github.com/JHDev2006/Super-Mario-Bros.-Remastered-Public) by [JoeMama](https://github.com/JHDev2006) and [their team](https://github.com/JHDev2006/Super-Mario-Bros.-Remastered-Public/graphs/contributors). as of release, this port is nearly feature complete. support me by clicking the dumb dog below!🤎
 
 <p align="center">
   <!--<a href="https://ko-fi.com/mircey"><img width="160" alt="crying emoji" src="https://github.com/user-attachments/assets/afdab743-7f81-4648-b87e-316a48fa5b87" /></a>-->
