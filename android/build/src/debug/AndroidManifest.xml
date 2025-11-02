@@ -9,6 +9,7 @@
         android:xlargeScreens="true" />
     <uses-feature android:glEsVersion="0x00030000" android:required="true" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-feature tools:node="replace" android:name="android.hardware.vulkan.level" android:required="false" android:version="1" />
     <uses-feature tools:node="replace" android:name="android.hardware.vulkan.version" android:required="true" android:version="0x400003" />
     <application android:label="@string/godot_project_name_string"
@@ -23,7 +24,7 @@
 
         <meta-data tools:node="replace" android:name="org.godotengine.rendering.method" android:value="mobile" />
         <meta-data tools:node="replace" android:name="org.godotengine.editor.version" android:value="4.5.beta3" />
-        <activity android:name=".GodotApp" tools:replace="android:screenOrientation,android:excludeFromRecents,android:resizeableActivity" tools:node="mergeOnlyAttributes" android:excludeFromRecents="false" android:screenOrientation="landscape" android:resizeableActivity="true">
+        <activity android:name=".GodotApp" tools:replace="android:screenOrientation,android:excludeFromRecents,android:resizeableActivity" tools:node="mergeOnlyAttributes" android:excludeFromRecents="false" android:screenOrientation="userLandscape" android:resizeableActivity="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />

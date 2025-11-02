@@ -1,4 +1,4 @@
-extends Node2D
+extends Node
 
 @onready var game_viewport = $CenterContainer/SubViewportContainer/SubViewport
 @onready var center_container = $CenterContainer
@@ -7,9 +7,6 @@ var thread : Thread
 
 func _ready() -> void:
 	await get_tree().process_frame
-	var width = round((240.0 / DisplayServer.screen_get_size().y) * DisplayServer.screen_get_size().x)
-	center_container.size.x = width
-	print("Wrapper/width: ", width)
 	await change_scene_to("res://Scenes/Levels/Disclaimer.tscn")
 
 func change_scene_to(path) -> void:

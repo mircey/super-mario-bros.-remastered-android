@@ -17,11 +17,13 @@ func null_function(_fuck_you := 0) -> void:
 	pass
 
 func window_size_changed(new_value := 0) -> void:
-	#get_tree().root.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_EXPAND if new_value == 1 else Window.CONTENT_SCALE_ASPECT_KEEP
-	var game_viewport_container : SubViewportContainer = get_tree().root.get_node("Wrapper/CenterContainer/SubViewportContainer")
-	var game_viewport : SubViewport = get_tree().root.get_node("Wrapper/CenterContainer/SubViewportContainer/SubViewport")
-	var x = round((240.0 / DisplayServer.screen_get_size().y) * DisplayServer.screen_get_size().x) if new_value == 2 else 384 if new_value == 1 else 256
+	var center_container : CenterContainer = get_tree().root.get_node("Wrapper/CenterContainer")
+	var screen_width = floor(center_container.size.x)
+	var x = mini(screen_width if new_value == 2 else 384 if new_value == 1 else 256, screen_width)
+	#var y = 
 	print("WindowChanger/x: ", x)
+	var game_viewport : SubViewport = get_tree().root.get_node("Wrapper/CenterContainer/SubViewportContainer/SubViewport")
+	var game_viewport_container : SubViewportContainer = get_tree().root.get_node("Wrapper/CenterContainer/SubViewportContainer")
 	game_viewport.size.x = x
 	game_viewport_container.size.x = x
 	

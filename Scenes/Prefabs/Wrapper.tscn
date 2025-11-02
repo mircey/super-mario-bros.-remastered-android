@@ -1,13 +1,18 @@
 [gd_scene load_steps=2 format=3 uid="uid://d3e1cch72jsyh"]
 
-[ext_resource type="Script" uid="uid://dh7grnx1ieta7" path="res://Scripts/Wrapper.gd" id="1_k5vsa"]
+[ext_resource type="Script" uid="uid://s4mhtrkgsrdi" path="res://Scripts/Wrapper.gd" id="1_k5vsa"]
 
-[node name="Wrapper" type="Node2D"]
+[node name="Wrapper" type="Node"]
 script = ExtResource("1_k5vsa")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
-offset_right = 256.0
-offset_bottom = 240.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="CenterContainer"]
 layout_mode = 2
