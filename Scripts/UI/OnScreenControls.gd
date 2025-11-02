@@ -21,6 +21,8 @@ const SELECT_HELD = preload("res://Assets/Sprites/UI/OnScreenControls/SelectHeld
 const RUN_LOCK = preload("res://Assets/Sprites/UI/OnScreenControls/RunLock.png")
 const RUN_LOCK_ON = preload("res://Assets/Sprites/UI/OnScreenControls/RunLockOn.png")
 
+const BLACKLIST := ["uinput-goodix"]
+
 @onready var left = $Control/LeftSprite
 @onready var right = $Control/RightSprite
 @onready var up = $Control/UpSprite
@@ -35,17 +37,19 @@ const RUN_LOCK_ON = preload("res://Assets/Sprites/UI/OnScreenControls/RunLockOn.
 
 var run_lock_on := false
 var vibration_thread: Thread
-var should_show := false
+var should_show: bool
 
 # debug cooldown of 5 seconds at 60 fps, 2,5 seconds at 120 fps
 var counter := 300
 
 func _process(_delta : float) -> void:
-	if Input.get_connected_joypads().size() > 0 || !should_show:
+	var connected := detect_real_joysticks()
+	if connected.size() > 0 || !should_show:
 		hide()
 		if counter == 300:
-			print("Input/get_connected_joypads(): ", Input.get_connected_joypads())
-			print("OnScreenControls/should_show: ", should_show)
+			print("connected: ", connected)
+			print("connected/size(): ", connected.size())
+			print("connected/should_show: ", should_show)
 	else:
 		show()
 	counter = counter - 1 if counter > 0 else 300
@@ -154,6 +158,19 @@ func on_select_pressed() -> void:
 
 func on_select_released() -> void:
 	select.texture = SELECT
+
+func detect_real_joysticks() -> Array:
+	var realJoysticks: Array
+	
+	if !Input.get_connected_joypads().size(): return []
+
+	for i in Input.get_connected_joypads():
+		if Input.get_joy_name(i) in BLACKLIST:
+			if counter == 300: print(Input.get_joy_name(i), " detected!")
+		else:
+			realJoysticks.append(i)
+			if counter == 300: print(Input.get_joy_name(i), " is valid!")
+	return realJoysticks if (realJoysticks.size() > 0) else []
 
 func _exit_tree():
 	if vibration_thread != null and vibration_thread.is_alive():

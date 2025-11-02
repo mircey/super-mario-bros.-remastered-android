@@ -175,6 +175,7 @@ func _ready() -> void:
 		debug_mode = false
 	#setup_discord_rpc()
 	check_for_rom()
+	
 	await get_tree().process_frame  # Wait for scene tree to be ready
 	var game_viewport = get_tree().root.get_node("Wrapper/CenterContainer/SubViewportContainer/SubViewport")
 	if game_viewport:

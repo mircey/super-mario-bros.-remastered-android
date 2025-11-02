@@ -20,10 +20,10 @@ run/main_scene="uid://d3e1cch72jsyh"
 config/use_custom_user_dir=true
 config/features=PackedStringArray("4.5", "Forward Plus")
 boot_splash/bg_color=Color(0, 0, 0, 1)
+config/icon="res://icon.png"
 boot_splash/show_image=false
 boot_splash/fullsize=false
 boot_splash/use_filter=false
-config/icon="res://icon.png"
 
 [autoload]
 
