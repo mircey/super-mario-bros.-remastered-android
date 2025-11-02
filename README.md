@@ -27,7 +27,7 @@ i just spent >71 hours across 7 days on porting this amazing game to android!! i
 
 ## download
 
-get the latest universal release [here](https://github.com/mircey/super-mario-bros.-remastered-android/releases/download/1/smb1r-android-arm64-1.apk)! if youre on an android based handheld, like an AYN or Retroid device, grab [this](https://github.com/mircey/super-mario-bros.-remastered-android/releases/download/1/smb1r-android-arm64-2bfd3c8.apk) release instead.
+get the latest universal release [here](https://github.com/mircey/super-mario-bros.-remastered-android/releases/download/2/smb1r-android-arm64-2.apk)! if youre on an android based handheld, with an integrated controller, like an AYN or Retroid device, grab [this](https://github.com/mircey/super-mario-bros.-remastered-android/releases/download/1/smb1r-android-arm64-2bfd3c8.apk) release instead.
 
 # how to contribute
 
