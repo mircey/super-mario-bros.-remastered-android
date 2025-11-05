@@ -21,7 +21,8 @@ const SELECT_HELD = preload("res://Assets/Sprites/UI/OnScreenControls/SelectHeld
 const RUN_LOCK = preload("res://Assets/Sprites/UI/OnScreenControls/RunLock.png")
 const RUN_LOCK_ON = preload("res://Assets/Sprites/UI/OnScreenControls/RunLockOn.png")
 
-const BLACKLIST := ["uinput-goodix", "uinput-silead"]
+# array of known fake controller name prefixes
+const BLACKLIST := ["uinput-"]
 
 @onready var left = $Control/LeftSprite
 @onready var right = $Control/RightSprite
@@ -166,7 +167,11 @@ func detect_real_joysticks() -> Array:
 
 	for i in Input.get_connected_joypads():
 		var joy_name = Input.get_joy_name(i)
-		if joy_name in BLACKLIST:
+		var is_fake := false
+		for j in BLACKLIST:
+			if joy_name.begins_with(j):
+				is_fake = true
+		if is_fake:
 			if counter == 300: print(joy_name, " detected!")
 		else:
 			realJoysticks.append(i)
