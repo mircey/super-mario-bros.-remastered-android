@@ -98,3 +98,5 @@ thanks to [WisconsiKnight](https://www.youtube.com/@WisconsiKnight), [Brackeys](
 thanks to Milana for pushing me towards publishing my android port, instead of working on it exclusively privately
 
 thanks to Ömer and Danny for alpha testing and thanks to Kenny for lending me various android devices
+
+thanks to @Celizte for researching and implementing a robust fix for missing on screen/touch controls
