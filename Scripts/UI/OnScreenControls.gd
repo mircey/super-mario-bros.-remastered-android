@@ -22,7 +22,8 @@ const RUN_LOCK = preload("res://Assets/Sprites/UI/OnScreenControls/RunLock.png")
 const RUN_LOCK_ON = preload("res://Assets/Sprites/UI/OnScreenControls/RunLockOn.png")
 
 # array of known fake controller name prefixes
-const BLACKLIST := ["uinput-"]
+# contains uinput, to catch: uinput-goodix, uinput-silead, uinput_nav, ...
+const BLACKLIST := ["uinput"]
 
 @onready var left = $Control/LeftSprite
 @onready var right = $Control/RightSprite
