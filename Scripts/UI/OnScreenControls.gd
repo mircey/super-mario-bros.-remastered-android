@@ -48,6 +48,7 @@ func _process(_delta : float) -> void:
 	var connected := detect_real_joysticks()
 	if connected.size() > 0 || !should_show:
 		hide()
+		# this whole 5s interval debugging should prolly be removed eventually, if there are no further reports of missing touch controls coming in. 
 		if counter == 300:
 			print("connected: ", connected)
 			print("connected/size(): ", connected.size())
