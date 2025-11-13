@@ -1,3 +1,5 @@
+![banner-by-MysticG](https://github.com/user-attachments/assets/ab61c6a0-11e0-41a8-830c-733f03323618)
+
 # super mario bros. remastered android
 this is an android port of the [Super Mario Bros. Remaster](https://github.com/JHDev2006/Super-Mario-Bros.-Remastered-Public) by [JoeMama](https://github.com/JHDev2006) and [their team](https://github.com/JHDev2006/Super-Mario-Bros.-Remastered-Public/graphs/contributors). as of release, this port is nearly feature complete. support me by clicking the dumb dog below!🤎
 
@@ -26,7 +28,7 @@ this is an android port of the [Super Mario Bros. Remaster](https://github.com/J
 
 ## download
 
-get the latest universal release [here](https://github.com/mircey/super-mario-bros.-remastered-android/releases/download/5/smb1r-android-arm64-5.apk)! if youre on an android based handheld, with an integrated controller, like an AYN or Retroid device, grab [this](https://github.com/mircey/super-mario-bros.-remastered-android/releases/download/1/smb1r-android-arm64-2bfd3c8.apk) release instead.
+get the latest universal release [here](https://github.com/mircey/super-mario-bros.-remastered-android/releases/download/5/smb1r-android-arm64-5.apk)! if youre on an android based handheld, with an integrated controller, like an AYN or Retroid device, maybe grab [this](https://github.com/mircey/super-mario-bros.-remastered-android/releases/download/1/smb1r-android-arm64-2bfd3c8.apk) release instead.
 
 # how to contribute
 
@@ -100,3 +102,5 @@ thanks to Milana for pushing me towards publishing my android port, instead of w
 thanks to Ömer and Danny for alpha testing and thanks to Kenny for lending me various android devices
 
 thanks to [Celizte](https://github.com/Celizte) for researching and implementing a robust fix for missing on screen/touch controls
+
+thanks to [MysticG](https://www.youtube.com/channel/UC1gK8vwkCyQgJyVlfmVr6Ag) for their amazing work on the banner artwork at the top of the page🤎
