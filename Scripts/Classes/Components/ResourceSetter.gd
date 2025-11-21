@@ -12,6 +12,11 @@ signal sprites_updated
 static var cache := {}
 
 func _enter_tree() -> void:
+	if Global.level_theme_changed.is_connected(update_sprites):
+		Global.level_theme_changed.disconnect(update_sprites)
+	if Global.level_time_changed.is_connected(update_sprites):
+		Global.level_time_changed.disconnect(update_sprites)
+	
 	Global.level_theme_changed.connect(update_sprites)
 	Global.level_time_changed.connect(update_sprites)
 

@@ -1,5 +1,8 @@
 extends Node
 
+var active_score_tween: Tween
+var active_time_tween: Tween
+
 var level_theme := "Overworld":
 	set(value):
 		level_theme = value
@@ -56,9 +59,6 @@ signal text_shadow_changed
 @onready var player_ghost: PlayerGhost = $PlayerGhost
 
 var debugged_in := true
-
-var score_tween = create_tween()
-var time_tween = create_tween()
 
 var score := 0:
 	set(value):
@@ -166,9 +166,15 @@ var debug_mode := false
 
 var controller_connected := false
 var on_screen_controls_visible := true
-@onready var on_screen_contols = $OnScreenControls
+var on_screen_controls: CanvasLayer
 
 func _ready() -> void:
+	await get_tree().process_frame
+	on_screen_controls = get_tree().root.get_node("OnScreenControls")
+	if on_screen_controls:
+		print("OnScreenControls found successfully")
+	else:
+		print("OnScreenControls not found - check the node path")
 	current_version = get_version_number()
 	get_server_version()
 	if OS.is_debug_build():
@@ -243,23 +249,32 @@ func tally_time() -> void:
 	$ScoreTally.play()
 	tallying_score = true
 	var target_score = score + (time * 50)
-	score_tween = create_tween()
-	time_tween = create_tween()
+	
+	# Store the tweens in class variables so other functions can access them
+	active_score_tween = create_tween()
+	active_time_tween = create_tween()
+	
 	var duration = float(time) / 120
 	
-	score_tween.tween_property(self, "score", target_score, duration)
-	time_tween.tween_property(self, "time", 0, duration)
-	await score_tween.finished
+	active_score_tween.tween_property(self, "score", target_score, duration)
+	active_time_tween.tween_property(self, "time", 0, duration)
+	await active_score_tween.finished
 	tallying_score = false
 	$ScoreTally.stop()
 	$ScoreTallyEnd.play()
 	score_tally_finished.emit()
 
 func cancel_score_tally() -> void:
-	score_tween.kill()
-	time_tween.kill()
+	if active_score_tween:
+		active_score_tween.kill()
+	if active_time_tween:
+		active_time_tween.kill()
 	tallying_score = false
 	$ScoreTally.stop()
+	
+	# Clear the references
+	active_score_tween = null
+	active_time_tween = null
 
 func activate_p_switch() -> void:
 	if p_switch_active == false:
