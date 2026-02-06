@@ -41,21 +41,35 @@ func get_custom_characters() -> void:
 		idx += 1
 	print(Player.CHARACTER_NAMES)
 	
-	DirAccess.make_dir_recursive_absolute("user://custom_characters")
-	for i in DirAccess.get_directories_at("user://custom_characters"):
-		if FileAccess.file_exists("user://custom_characters/" + i + "/CharacterInfo.json"):
-			var char_path = "user://custom_characters/" + i + "/"
-			var json = JSON.parse_string(FileAccess.open(char_path + "CharacterInfo.json", FileAccess.READ).get_as_text())
+	var base_path = Global.config_path
+	var char_dir = base_path.path_join("custom_characters") 
+	for i in DirAccess.get_directories_at(char_dir):
+		var char_path = char_dir.path_join(i)
+		var char_info_path = char_path.path_join("CharacterInfo.json")
+		if FileAccess.file_exists(char_info_path):
+			var json = JSON.parse_string(FileAccess.open(char_path.path_join("CharacterInfo.json"), FileAccess.READ).get_as_text())
 			Player.CHARACTERS.append(i)
 			Player.CHARACTER_NAMES.append(json.name)
-			if FileAccess.file_exists(char_path + "CharacterColour.json"):
-				Player.CHARACTER_COLOURS.append(load(char_path + "CharacterColour.json"))
-			if FileAccess.file_exists(char_path + "LifeIcon.json"):
-				GameHUD.character_icons.append(load(char_path + "LifeIcon.json"))
-			if FileAccess.file_exists(char_path + "ColourPalette.json"):
-				Player.CHARACTER_PALETTES.append(load(char_path + "ColourPalette.json"))
-			if FileAccess.file_exists(char_path + "SFX.json"):
-				AudioManager.character_sfx_map[i] = JSON.parse_string(FileAccess.open(char_path + "SFX.json", FileAccess.READ).get_as_text())
+			
+			if FileAccess.file_exists(char_path.path_join("CharacterColour.json")):
+				Player.CHARACTER_COLOURS.append(load(char_path.path_join("CharacterColour.json")))
+			else:
+				Player.CHARACTER_COLOURS.append(null)
+			
+			if FileAccess.file_exists(char_path.path_join("LifeIcon.json")):
+				GameHUD.character_icons.append(load(char_path.path_join("LifeIcon.json")))
+			else:
+				GameHUD.character_icons.append(null)
+				
+			if FileAccess.file_exists(char_path.path_join("ColourPalette.json")):
+				Player.CHARACTER_PALETTES.append(load(char_path.path_join("ColourPalette.json")))
+			else:
+				Player.CHARACTER_PALETTES.append(null)
+			
+			if FileAccess.file_exists(char_path.path_join("SFX.json")):
+				AudioManager.character_sfx_map[i] = JSON.parse_string(FileAccess.open(char_path.path_join("SFX.json"), FileAccess.READ).get_as_text())
+			else:
+				AudioManager.character_sfx_map[i] = {}
 
 func open() -> void:
 	get_custom_characters()
@@ -74,11 +88,11 @@ func handle_input() -> void:
 		selected_index = wrap(selected_index + 1, 0, Player.CHARACTERS.size())
 		update_sprites()
 	if Input.is_action_just_pressed("ui_accept"):
-		Global.player_characters[player_id] = str(selected_index)
+		Global.player_characters[player_id] = (selected_index)
 		var characters := Global.player_characters
 		for i in characters:
 			if int(i) > 3:
-				characters = "0000"
+				characters = [0, 0, 0, 0]
 		Settings.file.game.characters = characters
 		Settings.save_settings()
 		selected.emit()
@@ -106,3 +120,7 @@ func select() -> void:
 func close() -> void:
 	active = false
 	hide()
+
+
+func on_selected() -> void:
+	pass # Replace with function body.

@@ -14,6 +14,11 @@ func _enter_tree() -> void:
 			i.uppercase = true
 
 func _ready() -> void:
+	var animation: Animation = $AnimationPlayer.get_animation_library("").get_animation(&"Go")
+	var track: int = animation.find_track("AudioStreamPlayer", Animation.TYPE_AUDIO)
+	for key in animation.track_get_key_count(track):
+		var resource_getter = ResourceGetter.new() #Why do I have to make a new one each time?
+		animation.audio_track_set_key_stream(track, key, resource_getter.get_resource(animation.audio_track_get_key_stream(track, key)))
 	Global.debugged_in = false
 	Global.get_node("GameHUD").hide()
 	OnScreenControls.should_show = false
@@ -25,7 +30,7 @@ func _exit_tree() -> void:
 	OnScreenControls.should_show = true
 
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("jump_0") and can_skip:
+	if Input.is_action_just_pressed("ui_accept") and can_skip:
 		go_to_menu()
 
 func on_screen_tapped() -> void:
@@ -34,6 +39,7 @@ func on_screen_tapped() -> void:
 		go_to_menu()
 
 func go_to_menu() -> void:
+	ResourceGenerator.updating = true
 	if Global.rom_path == "":
 		Global.transition_to_scene("res://Scenes/Levels/RomVerifier.tscn")
 	elif not Global.rom_assets_exist:

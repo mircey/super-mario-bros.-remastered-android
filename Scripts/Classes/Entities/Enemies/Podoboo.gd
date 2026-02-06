@@ -48,8 +48,16 @@ func calculate_jump_height() -> float:
 const SMOKE_PARTICLE = preload("uid://d08nv4qtfouv1")
 
 func flag_die() -> void:
-	die()
+	if $VisibleOnScreenEnabler2D.is_on_screen():
+		die()
+	else:
+		queue_free()
 
 func die() -> void:
+	killed.emit()
+	queue_free()
+
+func die_from_hammer() -> void:
+	AudioManager.play_sfx("hammer_hit", global_position)
 	killed.emit()
 	queue_free()

@@ -45,20 +45,34 @@ func destroy_bridge(player: Player) -> void:
 	Global.can_time_tick = false
 	axe_touched.emit()
 	$Axe.queue_free()
+	if $AxeAnim.sprite_frames.has_animation("Cut"):
+		$AxeAnim.play("Cut")
+	else:
+		$AxeAnim.queue_free()
 	if bowser_present:
+		var bowser_count = 0
 		for i in get_tree().get_nodes_in_group("Bowser"):
-			i.bridge_fall()
+			if i.ignore_flag_die == false:
+				bowser_count += 1 
+				i.bridge_fall(true)
+		if bowser_count <= 0: 
+			return
 		get_tree().paused = true
 		await get_tree().create_timer(0.5).timeout
+		AudioManager.play_sfx("bridge_break", $BridgeChain.global_position)
+		$BridgeChain.queue_free()
+		await get_tree().create_timer(0.067).timeout
 		for i in $Bridge.get_children():
 			if i.visible:
-				AudioManager.play_sfx("block_break", i.global_position)
-			if Settings.file.visuals.bridge_animation == 0:
-				bridge_piece_break(i)
-			else:
-				bridge_piece_fall(i)
-			await get_tree().create_timer(0.1).timeout
-		await get_tree().create_timer(1.5).timeout
+				AudioManager.play_sfx("bridge_break", i.global_position)
+				if Settings.file.visuals.bridge_animation == 0:
+					bridge_piece_break(i)
+				else:
+					bridge_piece_fall(i)
+				await get_tree().create_timer(0.067).timeout
+		for i in get_tree().get_nodes_in_group("Bowser"):
+			i.bridge_fall(false)
+		await get_tree().create_timer(1).timeout
 		get_tree().paused = false
 	victory_sequence(player)
 
@@ -70,10 +84,11 @@ func bridge_piece_fall(node: Node2D) -> void:
 const BRIDGE_DESTRUCTION_PARTICLE = preload("uid://cwfjdgsyh35h6")
 
 func bridge_piece_break(node: Node2D) -> void:
-	var particle = BRIDGE_DESTRUCTION_PARTICLE.instantiate()
-	particle.global_position = node.global_position
-	particle.process_mode = Node.PROCESS_MODE_ALWAYS
-	add_sibling(particle)
+	if Settings.file.visuals.extra_particles == 1:
+		var particle = BRIDGE_DESTRUCTION_PARTICLE.instantiate()
+		particle.global_position = node.global_position
+		particle.process_mode = Node.PROCESS_MODE_ALWAYS
+		add_sibling(particle)
 	node.modulate.a = 0
 
 func _physics_process(delta: float) -> void:

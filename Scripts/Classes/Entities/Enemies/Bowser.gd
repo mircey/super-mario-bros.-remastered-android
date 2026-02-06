@@ -6,7 +6,7 @@ const HAMMER = preload("res://Scenes/Prefabs/Entities/Items/Hammer.tscn")
 
 @export var can_hammer := false
 @export var can_fire := true
-
+@export var is_real := true
 @export var music_enabled := true
 
 var target_player: Player = null
@@ -50,8 +50,7 @@ func get_target_y(player: Player) -> float:
 		return player.global_position.y - 8
 
 func show_smoke() -> void:
-	if has_meta("is_real"):
-		return
+	if is_real: return
 	var smoke = preload("res://Scenes/Prefabs/Particles/SmokeParticle.tscn").instantiate()
 	smoke.scale = Vector2(2, 2)
 	smoke.global_position =global_position
@@ -63,6 +62,8 @@ func breathe_fire() -> void:
 		return
 	sprite.play("FireCharge")
 	await get_tree().create_timer(1, false).timeout
+	if ignore_flag_die:
+		return
 	var flame = BOWSER_FLAME.instantiate()
 	flame.global_position = global_position + Vector2(18 * direction, -20)
 	flame.mode = 1
@@ -78,23 +79,25 @@ func breathe_fire() -> void:
 	await get_tree().create_timer(0.5, false).timeout
 	sprite.play("Idle")
 
-func bridge_fall() -> void:
-	process_mode = Node.PROCESS_MODE_ALWAYS
-	direction = 1
-	$FlameTimer.queue_free()
-	$HammerTime.queue_free()
-	$JumpTimer.queue_free()
-	sprite.play("Fall")
-	sprite.reset_physics_interpolation()
-	$MoveAnimation.queue_free()
-	can_fall = false
-	velocity.y = 0
-	await get_tree().create_timer(2).timeout
-	$FallSFX.play()
-	can_fall = true
-	$Collision.queue_free()
-	await get_tree().create_timer(2).timeout
-	queue_free()
+func bridge_fall(start: bool = false) -> void:
+	if start:
+		process_mode = Node.PROCESS_MODE_ALWAYS
+		direction = 1
+		sprite.play("Fall")
+		sprite.reset_physics_interpolation()
+		$FlameTimer.queue_free()
+		$HammerTime.queue_free()
+		$JumpTimer.queue_free()
+		$MoveAnimation.queue_free()
+		can_fall = false
+		velocity.y = 0
+	else:
+		$FallSFX.play()
+		ignore_flag_die = true
+		can_fall = true
+		$Collision.queue_free()
+		await get_tree().create_timer(5).timeout
+		queue_free()
 
 func throw_hammers() -> void:
 	if can_hammer == false:
@@ -103,7 +106,13 @@ func throw_hammers() -> void:
 	await get_tree().create_timer(0.5, false).timeout
 	for i in randi_range(3, 6):
 		$Hammer.show()
+		if ignore_flag_die:
+			$Hammer.hide()
+			return
 		await get_tree().create_timer(0.1, false).timeout
+		if ignore_flag_die:
+			$Hammer.hide()
+			return
 		var node = HAMMER.instantiate()
 		node.velocity.y = -200
 		node.global_position = $Hammer.global_position
@@ -139,6 +148,14 @@ func play_music() -> void:
 	if music_enabled:
 		AudioManager.set_music_override(AudioManager.MUSIC_OVERRIDES.BOWSER, 5, false)
 
-
 func on_timeout() -> void:
 	move_dir = [-1, 1].pick_random()
+
+func on_gib_about_to_spawn() -> void:
+	if is_real:
+		$FallSFX.play()
+		$FallSFX.finished.connect($FallSFX.queue_free)
+		$FallSFX.reparent(get_parent())
+	# guzlad: ugly but it'll have to do until we move the metadata stuff to actual variables
+	if ((Global.current_game_mode == Global.GameMode.CUSTOM_LEVEL) or (Global.current_game_mode == Global.GameMode.LEVEL_EDITOR)) and !is_real:
+		$SpriteScaleJoint/DeathSprite/ResourceSetterNew.resource_json = load("res://Assets/Sprites/Enemies/Goomba.json")

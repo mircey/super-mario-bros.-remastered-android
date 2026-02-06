@@ -4,11 +4,18 @@ extends AssetRipper
 @onready var progress_bar: ProgressBar = %ProgressBar
 @onready var error: Label = %Error
 
+static var updating := false
+
 func _ready() -> void:
 	Global.get_node("GameHUD").hide()
 	OnScreenControls.should_show = false
 	
-	rom = FileAccess.get_file_as_bytes(Global.ROM_PATH)
+	if updating: $MarginContainer/ProgressBar/Label.text = "UPDATING ASSETS..."
+	#rom = FileAccess.get_file_as_bytes(Global.ROM_PATH)
+	rom = FileAccess.get_file_as_bytes(Global.rom_path)
+	print(Global.rom_path)
+	print(rom.is_empty())
+	print(rom.get_string_from_ascii())
 	prg_rom_size = rom[4] * 16384
 	chr_rom = rom.slice(16 + prg_rom_size)
 	await get_tree().create_timer(1, false).timeout

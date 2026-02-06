@@ -21,8 +21,11 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	#print(can_continue)
 	if Input.is_action_just_pressed("jump_0") and can_continue:
-		go_back_to_title()
 		can_continue = false
+		if Global.transitioning_scene:
+			await Global.transition_finished
+			await get_tree().create_timer(0.15, false).timeout
+		go_back_to_title()
 
 
 func go_back_to_title() -> void:
@@ -47,7 +50,7 @@ func quit_to_menu() -> void:
 
 func reset_values() -> void:
 	if Global.world_num <= 8:
-		ChallengeModeHandler.current_run_red_coins_collected = ChallengeModeHandler.red_coins_collected[Global.world_num - 1][Global.level_num - 1]
+		ChallengeModeHandler.current_run_red_coins_collected = 0
 	Global.lives = 3
 	Global.score = 0
 	Global.player_power_states = "0000"

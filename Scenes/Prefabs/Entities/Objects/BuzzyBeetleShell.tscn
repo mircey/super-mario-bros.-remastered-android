@@ -20,6 +20,9 @@ size = Vector2(12, 12)
 [node name="BuzzyBeetleShell" type="CharacterBody2D" node_paths=PackedStringArray("on_screen_enabler", "score_note_adder") groups=["Enemies"]]
 collision_layer = 32
 collision_mask = 6
+floor_constant_speed = true
+floor_max_angle = 0.87266463
+floor_snap_length = 4.0
 script = ExtResource("1_67hvo")
 on_screen_enabler = NodePath("VisibleOnScreenEnabler2D")
 score_note_adder = NodePath("ScoreNoteSpawner")
@@ -89,11 +92,17 @@ one_way_collision = true
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 position = Vector2(0, -8)
+scale = Vector2(1, 0.987)
+rect = Rect2(-128, -128, 256, 256)
 
 [connection signal="killed" from="." to="GibSpawner" method="summon_gib"]
 [connection signal="area_entered" from="Hitbox" to="." method="on_area_entered"]
+[connection signal="hammer_player_hit" from="EnemyPlayerDetection" to="." method="die_from_hammer"]
+[connection signal="hammer_player_hit" from="EnemyPlayerDetection" to="ScoreNoteSpawner" method="spawn_note" binds= [200]]
 [connection signal="invincible_player_hit" from="EnemyPlayerDetection" to="." method="die_from_object"]
+[connection signal="invincible_player_hit" from="EnemyPlayerDetection" to="ScoreNoteSpawner" method="spawn_note" binds= [200]]
 [connection signal="player_hit" from="EnemyPlayerDetection" to="." method="on_player_hit"]
 [connection signal="player_stomped_on" from="EnemyPlayerDetection" to="." method="on_player_stomped_on"]
 [connection signal="moving_shell_entered" from="ShellDetection" to="." method="die_from_object"]
 [connection signal="block_bounced" from="BlockBouncingDetection" to="." method="block_bounced"]
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="queue_free"]

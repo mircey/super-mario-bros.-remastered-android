@@ -9,6 +9,7 @@ static var title_first_load = true
 @onready var cursor = %Cursor
 
 static var last_theme := "Overworld"
+var last_campaign := "SMB1"
 var has_achievements_to_unlock := false
 @export var active_options: TitleScreenOptions = null
 
@@ -21,6 +22,7 @@ func _enter_tree() -> void:
 	Global.current_campaign = Settings.file.game.campaign
 	Global.in_title_screen = true
 	Global.current_game_mode = Global.GameMode.NONE
+	last_campaign = Global.current_campaign
 	title_first_load = false
 
 func _ready() -> void:
@@ -28,6 +30,7 @@ func _ready() -> void:
 	#print(Settings.file.video.size)
 	#get_tree().root.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_EXPAND if Settings.file.video.size == 1 else Window.CONTENT_SCALE_ASPECT_KEEP
 	setup_stars()
+	$CanvasLayer2/VersionLabel/DevBuildWarning.visible = Global.is_snapshot
 	Global.level_theme_changed.connect(setup_stars)
 	DiscoLevel.in_disco_level = false
 	get_tree().paused = false
@@ -43,15 +46,17 @@ func _ready() -> void:
 	Global.player_ghost.apply_data()
 	get_tree().call_group("PlayerGhosts", "delete")
 	Global.current_level = null
-	Global.world_num = clamp(Global.world_num, 1, 8)
+	Global.world_num = clamp(Global.world_num, 1, get_world_count())
+	update_title()
+
+func update_title() -> void:
+	SaveManager.apply_save(SaveManager.load_save(Global.current_campaign))
 	level_id = Global.level_num - 1
 	world_id = Global.world_num
 	update_theme()
 	await get_tree().physics_frame
 	$LevelBG.time_of_day = ["Day", "Night"].find(Global.theme_time)
 	$LevelBG.update_visuals()
-
-
 
 func play_bgm() -> void:
 	if has_achievements_to_unlock:
@@ -69,12 +74,13 @@ func _process(_delta: float) -> void:
 		$BGM.play()
 
 func campaign_selected() -> void:
-	SaveManager.apply_save(SaveManager.load_save(Global.current_campaign))
-	if Global.current_campaign == "SMBANN":
-		Global.current_game_mode = Global.GameMode.CAMPAIGN
-		$CanvasLayer/AllNightNippon/WorldSelect.open()
-		return
 	$CanvasLayer/Options1.close()
+	if last_campaign != Global.current_campaign:
+		last_campaign = Global.current_campaign
+		update_title()
+	if Global.current_campaign == "SMBANN":
+		$CanvasLayer/Options2Stripped.open()
+		return
 	$CanvasLayer/Options2.open()
 
 func open_story_options() -> void:
@@ -90,6 +96,7 @@ func open_story_options() -> void:
 func continue_story() -> void:
 	Global.current_game_mode = Global.GameMode.CAMPAIGN
 	if Global.game_beaten or Global.debug_mode:
+		go_back_to_first_level()
 		$CanvasLayer/StoryMode/QuestSelect.open()
 	else:
 		$CanvasLayer/StoryMode/NoBeatenCharSelect.open()
@@ -112,17 +119,20 @@ func check_for_ghost() -> void:
 	else:
 		$CanvasLayer/MarathonMode/HasWarp/CharacterSelect.open()
 
+func get_highscore() -> void:
+	%HighScore.text = "TOP- " + str(Global.high_score).pad_zeros(6)
+	if Global.world_num == 1 and Global.level_num == 1 and Global.score <= 0:
+		%StoryOptions.selected_index = 0
+	else:
+		%StoryOptions.selected_index = 1
 
-func new_game() -> void:
-	if Global.score > 0 or Global.coins > 0 or Global.player_power_states != "0000" or Global.world_num > 1 or Global.level_num > 1:
-		$CanvasLayer/SaveDeletionWarning.open()
-		await $CanvasLayer/SaveDeletionWarning.selected
-		if $CanvasLayer/SaveDeletionWarning.selected_index == 1:
-			active_options.active = true
-			return
-	Global.current_game_mode = Global.GameMode.CAMPAIGN
-	SaveManager.clear_save()
-	start_game()
+func clear_stats() -> void:
+	Global.clear_saved_values()
+
+func go_back_to_first_level() -> void:
+	Global.world_num = 1
+	Global.level_num = 1
+	LevelTransition.level_to_transition_to = Level.get_scene_string(Global.world_num, Global.level_num)
 
 func start_game() -> void:
 	PipeCutscene.seen_cutscene = false
@@ -132,6 +142,7 @@ func start_game() -> void:
 	Global.transition_to_scene("res://Scenes/Levels/LevelTransition.tscn")
 
 func start_full_run() -> void:
+	Global.second_quest = false
 	Global.current_game_mode = Global.GameMode.MARATHON
 	SpeedrunHandler.timer = 0
 	if SpeedrunHandler.is_warp_run:
@@ -148,6 +159,7 @@ func start_full_run() -> void:
 	Global.transition_to_scene("res://Scenes/Levels/LevelTransition.tscn")
 
 func start_level_run() -> void:
+	Global.second_quest = false
 	Global.current_game_mode = Global.GameMode.MARATHON_PRACTICE
 	SpeedrunHandler.timer = 0
 	if SpeedrunHandler.is_warp_run:
@@ -166,6 +178,7 @@ func _exit_tree() -> void:
 	Global.in_title_screen = false
 
 func challenge_hunt_selected() -> void:
+	Global.second_quest = false
 	Global.current_game_mode = Global.GameMode.CHALLENGE
 	Global.reset_values()
 	Global.clear_saved_values()
@@ -184,7 +197,7 @@ func challenge_hunt_start() -> void:
 
 
 	LevelTransition.level_to_transition_to = Level.get_scene_string(Global.world_num, Global.level_num)
-	ChallengeModeHandler.current_run_red_coins_collected = ChallengeModeHandler.red_coins_collected[Global.world_num - 1][Global.level_num -1]
+	ChallengeModeHandler.current_run_red_coins_collected = 0
 	Global.transition_to_scene("res://Scenes/Levels/LevelTransition.tscn")
 
 func world_9_selected() -> void:
@@ -219,6 +232,21 @@ func open_options() -> void:
 func quit_game() -> void:
 	get_tree().quit()
 
+func new_game_selected() -> void:
+	Global.second_quest = false
+	Global.current_game_mode = Global.GameMode.CAMPAIGN
+	if Global.game_beaten:
+		%QuestSelect.open()
+	else:
+		$CanvasLayer/StoryMode/NewUnbeatenGame/NoBeatenCharSelect.open()
+
+func continue_game() -> void:
+	SaveManager.apply_save(SaveManager.load_save(Global.current_campaign))
+	Global.current_game_mode = Global.GameMode.CAMPAIGN
+	if Global.game_beaten or Global.debug_mode:
+		$CanvasLayer/StoryMode/ContinueBeatenGame/WorldSelect.open()
+	else:
+		$CanvasLayer/StoryMode/ContinueUnbeatenGame/CharacterSelect.open()
 
 func on_story_options_closed() -> void:
 	$CanvasLayer/Options2.open()
@@ -238,3 +266,6 @@ func check_for_unlocked_achievements() -> void:
 		has_achievements_to_unlock = true
 		%AchievementUnlock.show_popup(new_achievements)
 	AchievementMenu.unlocked_achievements = Global.achievements
+
+func get_room_type() -> Global.Room:
+	return Global.Room.TITLE_SCREEN

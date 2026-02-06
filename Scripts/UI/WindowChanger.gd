@@ -31,6 +31,7 @@ func window_size_changed(new_value := 0) -> void:
 
 func vsync_changed(new_value := 0) -> void:
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED if new_value == 1 else DisplayServer.VSYNC_DISABLED)
+	
 	Settings.file.video.vsync = new_value
 
 func drop_shadows_changed(new_value := 0) -> void:
@@ -53,7 +54,28 @@ func language_changed(new_value := 0) -> void:
 	Settings.file.game.lang = Global.lang_codes[new_value]
 	%Flag.region_rect.position.x = new_value * 16
 
-func set_value(value_name := "", value := 0) -> void:
+func frame_limit_changed(new_value := 0) -> void: 
+	print_debug(str(new_value))
+	
+	var new_framerate := 0
+	match new_value: 
+		
+		1: new_framerate = 60
+		2: new_framerate = 120
+		3: new_framerate = 144
+		4: new_framerate = 240
+	
+	Engine.set_max_fps(new_framerate)
+	Settings.file.video.frame_limit = new_value
+
+func set_window_size(value := []) -> void:
+	pass
+	# nabbup: Recenter resized window on launch
+	#var newpos = get_window().position - Vector2i((value[0]-get_window().size.x), (value[1]-get_window().size.y))/2
+	#get_window().size = Vector2(value[0], value[1])
+	#get_window().position = newpos
+
+func set_value(value_name := "", value = null) -> void:
 	{
 		"mode": window_mode_changed,
 		"size": window_size_changed,
@@ -63,5 +85,7 @@ func set_value(value_name := "", value := 0) -> void:
 		"visuals": visuals_changed,
 		"palette": null_function,
 		"hud_size": hud_style_changed,
-		"hud_style": hud_style_changed
+		"hud_style": hud_style_changed,
+		"frame_limit": frame_limit_changed,
+		"window_size": set_window_size
 	}[value_name].call(value)

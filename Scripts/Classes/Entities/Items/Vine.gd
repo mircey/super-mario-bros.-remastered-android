@@ -67,12 +67,11 @@ func handle_player_interaction(delta: float) -> void:
 func on_player_entered(_player: Player) -> void:
 	if can_tele == false:
 		return
-	Level.in_vine_level = true
 	Level.vine_return_level = Global.current_level.scene_file_path
 	Global.transition_to_scene(Level.vine_warp_level)
 
 
 func on_area_exited(area: Area2D) -> void:
-	if area.owner is Player:
+	if area.owner is Player and area.name != "HammerHitbox":
 		if area.owner.state_machine.state.name == "Climb":
 			area.owner.state_machine.transition_to("Normal")

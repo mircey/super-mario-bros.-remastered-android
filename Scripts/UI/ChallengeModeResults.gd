@@ -19,6 +19,7 @@ func _ready() -> void:
 	coin_medal = int(ChallengeModeHandler.red_coins_collected[Global.world_num - 1][Global.level_num - 1]) & 0b011111 == 0b011111
 	score_medal = ChallengeModeHandler.top_challenge_scores[Global.world_num -1][Global.level_num - 1] >= ChallengeModeHandler.CHALLENGE_TARGETS[Global.current_campaign][Global.world_num -1][Global.level_num -1]
 	yoshi_medal = ChallengeModeHandler.is_coin_collected(ChallengeModeHandler.CoinValues.YOSHI_EGG, ChallengeModeHandler.red_coins_collected[Global.world_num - 1][Global.level_num - 1])
+	$ChallengeResults.play()
 	setup_results()
 
 func _process(_delta: float) -> void:
@@ -26,10 +27,9 @@ func _process(_delta: float) -> void:
 		can_exit = false
 		exiting = true
 		save_results()
-		$Music.stop()
-		$Music.stream = preload("res://Assets/Audio/BGM/ChallengeEnd.mp3")
-		$Music.play()
-		await $Music.finished
+		$ChallengeResults.stop()
+		$ChallengeEnd.play()
+		await $ChallengeEnd.finished
 		open_menu()
 	Engine.time_scale = 5 if Input.is_action_pressed("jump_0") and can_exit == false and exiting == false else 1
 
@@ -46,7 +46,7 @@ func save_results() -> void:
 
 func retry_level() -> void:
 	Global.player_power_states = "0000"
-	ChallengeModeHandler.current_run_red_coins_collected = ChallengeModeHandler.red_coins_collected[Global.world_num - 1][Global.level_num - 1]
+	ChallengeModeHandler.current_run_red_coins_collected = 0
 	Global.score = 0
 	LevelTransition.level_to_transition_to = Level.get_scene_string(Global.world_num, Global.level_num)
 	Global.transition_to_scene("res://Scenes/Levels/LevelTransition.tscn")
@@ -90,7 +90,8 @@ func update_score() -> void:
 
 func give_red_coin_medal() -> void:
 	const mask = (1 << ChallengeModeHandler.CoinValues.R_COIN_1) | (1 << ChallengeModeHandler.CoinValues.R_COIN_2) | (1 << ChallengeModeHandler.CoinValues.R_COIN_3) | (1 << ChallengeModeHandler.CoinValues.R_COIN_4) | (1 << ChallengeModeHandler.CoinValues.R_COIN_5)
-	var valid := (ChallengeModeHandler.current_run_red_coins_collected & mask) == mask
+	var all_collected = int(ChallengeModeHandler.red_coins_collected[Global.world_num - 1][Global.level_num - 1]) | ChallengeModeHandler.current_run_red_coins_collected
+	var valid := (int(all_collected) & mask) == mask
 	if valid and not coin_medal:
 		do_medal_give_animation($Sprite2D3/RedCoins)
 

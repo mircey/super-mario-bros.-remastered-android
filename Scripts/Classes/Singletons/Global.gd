@@ -26,17 +26,20 @@ var second_quest := false
 var extra_worlds_win := false
 const lang_codes := ["en", "fr", "es", "de", "it", "pt", "pl", "tr", "ru", "jp", "fil", "id", "ga"]
 
+var config_path := "user://"
+
 var rom_path := ""
 var rom_assets_exist := false
-const ROM_POINTER_PATH := "user://rom_pointer.smb"
-const ROM_PATH := "user://baserom.nes"
-const ROM_ASSETS_PATH := "user://resource_packs/BaseAssets"
+var ROM_POINTER_PATH = config_path.path_join("rom_pointer.smb")
+var ROM_PATH = config_path.path_join("baserom.nes")
+var ROM_ASSETS_PATH = config_path.path_join("resource_packs/BaseAssets")
 const ROM_PACK_NAME := "BaseAssets"
-const ROM_ASSETS_VERSION := 0
+const ROM_ASSETS_VERSION := 3
 
 var server_version := -1
 var current_version := -1
 var version_number := ""
+var is_snapshot := true
 
 const LEVEL_THEMES := {
 	"SMB1": SMB1_LEVEL_THEMES,
@@ -57,8 +60,10 @@ signal text_shadow_changed
 
 var debugged_in := true
 
-var score_tween = create_tween()
-var time_tween = create_tween()
+var score_tween = null
+var time_tween = null
+
+var total_deaths := 0
 
 var score := 0:
 	set(value):
@@ -84,6 +89,12 @@ var world_num := 1
 
 var level_num := 1
 var disco_mode := false
+
+enum Room{MAIN_ROOM, BONUS_ROOM, COIN_HEAVEN, PIPE_CUTSCENE, TITLE_SCREEN}
+
+const room_strings := ["MainRoom", "BonusRoom", "CoinHeaven", "PipeCutscene", "TitleScreen"]
+
+var current_room: Room = Room.MAIN_ROOM
 
 signal transition_finished
 var transitioning_scene := false
@@ -123,7 +134,7 @@ var connected_players := 1
 
 const CAMPAIGNS := ["SMB1", "SMBLL", "SMBS", "SMBANN"]
 
-var player_characters := "0000":
+var player_characters := [0, 0, 0, 0]:
 	set(value):
 		player_characters = value
 		player_characters_changed.emit()
@@ -166,14 +177,14 @@ var debug_mode := false
 
 var controller_connected := false
 var on_screen_controls_visible := true
-@onready var on_screen_contols = $OnScreenControls
+#@onready var on_screen_contols = $OnScreenControls
 
 func _ready() -> void:
+	if is_snapshot: get_build_time()
+	if OS.is_debug_build(): debug_mode = false
 	current_version = get_version_number()
 	get_server_version()
-	if OS.is_debug_build():
-		debug_mode = false
-	#setup_discord_rpc()
+	setup_config_dirs() # TODO hardcode config_dir to "user://"
 	check_for_rom()
 	
 	await get_tree().process_frame  # Wait for scene tree to be ready
@@ -181,7 +192,25 @@ func _ready() -> void:
 	if game_viewport:
 		reparent(game_viewport)
 
+func setup_config_dirs() -> void:
+	var dirs = [
+		"custom_characters",
+		"custom_levels",
+		"logs",
+		"marathon_recordings",
+		"resource_packs",
+		"saves",
+		"screenshots"
+	]
+
+	for d in dirs:
+		var full_path = Global.config_path.path_join(d)
+		if not DirAccess.dir_exists_absolute(full_path):
+			DirAccess.make_dir_recursive_absolute(full_path)
+
 func check_for_rom() -> void:
+	rom_path = ""
+	rom_assets_exist = false
 	if FileAccess.file_exists(Global.ROM_PATH) == false:
 		return
 	var path = Global.ROM_PATH 
@@ -194,6 +223,7 @@ func check_for_rom() -> void:
 		if pack_dict.get("version", -1) == ROM_ASSETS_VERSION:
 			rom_assets_exist = true 
 		else:
+			ResourceGenerator.updating = true
 			OS.move_to_trash(ROM_ASSETS_PATH)
 
 func _process(delta: float) -> void:
@@ -204,12 +234,28 @@ func _process(delta: float) -> void:
 		AudioManager.current_level_theme = ""
 		level_theme_changed.emit()
 		log_comment("Reloaded resource packs!")
+	
+	if Input.is_action_just_pressed("toggle_fps_count"):
+		%FPSCount.visible = !%FPSCount.visible
+	%FPSCount.text = str(int(Engine.get_frames_per_second())) + " FPS"
 
 	handle_p_switch(delta)
 	if Input.is_key_label_pressed(KEY_F11) and debug_mode == false and OS.is_debug_build():
 		AudioManager.play_global_sfx("switch")
 		debug_mode = true
 		log_comment("Debug Mode enabled! some bugs may occur!")
+		
+	if Input.is_action_just_pressed("ui_screenshot"):
+		take_screenshot()
+
+func take_screenshot() -> void:
+	var img: Image = get_viewport().get_texture().get_image()
+	var filename = Global.config_path.path_join("screenshots/screenshot_" + str(int(Time.get_unix_time_from_system())) + ".png")
+	var err = img.save_png(filename)
+	if !err:
+		log_comment("Screenshot Saved!")
+	else:
+		log_error(error_string(err))
 
 func handle_p_switch(delta: float) -> void:
 	if p_switch_active and get_tree().paused == false:
@@ -221,7 +267,25 @@ func handle_p_switch(delta: float) -> void:
 			AudioManager.stop_music_override(AudioManager.MUSIC_OVERRIDES.PSWITCH)
 
 func get_build_time() -> void:
-	print(int(Time.get_unix_time_from_system()))
+	# SkyanUltra: Slightly expanded function to make it easier to get snapshot build numbers.
+	var date = Time.get_date_dict_from_system()
+	var year_last_two = date.year % 100
+	var now = Time.get_unix_time_from_system()
+	print("[b][color=cyan]Current unix time:[/color][/b] ", int(now))
+	var start_of_year = Time.get_unix_time_from_datetime_dict({
+		"year": date.year,
+		"month": 1,
+		"day": 1,
+		"hour": 0,
+		"minute": 0,
+		"second": 0
+	})
+
+	var days_since_year_start = int((now - start_of_year) / 86400)
+	@warning_ignore("integer_division")
+	var week = int(days_since_year_start / 7) + 1
+	var build_date = "%02dw%02d" % [year_last_two, week]
+	print_rich("[b][color=cyan]Partial snapshot build ID:[/color][/b] ", build_date)
 
 func get_version_number() -> int:
 	var number = (FileAccess.open("res://version.txt", FileAccess.READ).get_as_text())
@@ -256,8 +320,10 @@ func tally_time() -> void:
 	score_tally_finished.emit()
 
 func cancel_score_tally() -> void:
-	score_tween.kill()
-	time_tween.kill()
+	if score_tween != null:
+		score_tween.kill()
+	if time_tween != null:
+		time_tween.kill()
 	tallying_score = false
 	$ScoreTally.stop()
 
@@ -270,8 +336,13 @@ func activate_p_switch() -> void:
 
 func reset_values() -> void:
 	PlayerGhost.idx = 0
-	Checkpoint.passed = false
+	Checkpoint.passed_checkpoints.clear()
 	Checkpoint.sublevel_id = 0
+	Global.total_deaths = 0
+	Door.unlocked_doors = []
+	Checkpoint.unlocked_doors = []
+	KeyItem.total_collected = 0
+	Checkpoint.keys_collected = 0
 	Level.start_level_path = Level.get_scene_string(Global.world_num, Global.level_num)
 	LevelPersistance.reset_states()
 	Level.first_load = true
@@ -279,6 +350,8 @@ func reset_values() -> void:
 	Level.in_vine_level = false
 	Level.vine_return_level = ""
 	Level.vine_warp_level = ""
+	p_switch_active = false
+	p_switch_timer = 0.0
 
 func clear_saved_values() -> void:
 	coins = 0
@@ -310,19 +383,20 @@ func transition_to_scene(scene_path := "") -> void:
 		$Transition/AnimationPlayer.play("RESET")
 		$Transition.hide()
 	transitioning_scene = false
+	transition_finished.emit()
 
 
 
-func do_fake_transition() -> void:
+func do_fake_transition(duration := 0.2) -> void:
 	if fade_transition:
 		$Transition/AnimationPlayer.play("FadeIn")
 		await $Transition/AnimationPlayer.animation_finished
-		await get_tree().create_timer(0.2, false).timeout
+		await get_tree().create_timer(duration, false).timeout
 		$Transition/AnimationPlayer.play_backwards("FadeIn")
 	else:
 		%TransitionBlock.modulate.a = 1
 		$Transition.show()
-		await get_tree().create_timer(0.25, false).timeout
+		await get_tree().create_timer(duration + 0.05, false).timeout
 		$Transition.hide()
 
 func freeze_screen() -> void:
@@ -336,38 +410,14 @@ func close_freeze() -> void:
 	$Transition/Freeze.hide()
 	$Transition.hide()
 
-var recording_dir = "user://marathon_recordings/"
-
-func setup_discord_rpc() -> void:
-	return
-	#DiscordRPC.app_id = 1331261692381757562
-	#DiscordRPC.start_timestamp = int(Time.get_unix_time_from_system())
-	#DiscordRPC.details = "In Title Screen.."
-	#if DiscordRPC.get_is_discord_working():
-	#	DiscordRPC.refresh()
-
-func set_discord_status(details := "") -> void:
-	return
-	#DiscordRPC.details = details
-	#if DiscordRPC.get_is_discord_working():
-	#	DiscordRPC.refresh()
+#var recording_dir = "user://marathon_recordings/"
+var recording_dir = config_path.path_join("marathon_recordings")
 
 func update_game_status() -> void:
-	return
-	#var lives_str := str(Global.lives)
-	#if Settings.file.difficulty.inf_lives == 1:
-	#	lives_str = "∞"
-	#var string := "Coins = " + str(Global.coins) + " Lives = " + lives_str
-	#DiscordRPC.large_image = (Global.level_theme + Global.theme_time).to_lower()
-	#DiscordRPC.small_image = Global.current_campaign.to_lower()
-	#DiscordRPC.state = string
-
-func refresh_discord_rpc() -> void:
-	return
-	#if DiscordRPC.get_is_discord_working() == false:
-	#	return
-	#update_game_status()
-	#DiscordRPC.refresh()
+	var lives_str := str(Global.lives)
+	if Settings.file.difficulty.inf_lives == 1:
+		lives_str = "∞"
+	var string := "Coins = " + str(Global.coins) + " Lives = " + lives_str
 
 func open_marathon_results() -> void:
 	get_node("GameHUD/MarathonResults").open()
@@ -415,6 +465,12 @@ func log_comment(msg := "") -> void:
 	await get_tree().create_timer(2, false).timeout
 	error_message.queue_free()
 
+func level_editor_is_playtesting() -> bool:
+	if Global.current_game_mode == Global.GameMode.LEVEL_EDITOR:
+		if Global.level_editor.current_state == LevelEditor.EditorState.PLAYTESTING:
+			return true
+	return false
+
 func unlock_achievement(achievement_id := AchievementID.SMB1_CLEAR) -> void:
 	achievements[achievement_id] = "1"
 	if achievement_id != AchievementID.COMPLETIONIST:
@@ -425,7 +481,7 @@ func check_completionist_achievement() -> void:
 	if achievements.count("0") == 1:
 		unlock_achievement(AchievementID.COMPLETIONIST)
 
-const FONT = preload("uid://cd221873lbtj1")
+const FONT = preload("res://Assets/Sprites/UI/Font.fnt")
 
 func sanitize_string(string := "") -> String:
 	string = string.to_upper()
@@ -439,3 +495,19 @@ func show_on_screen_controls() -> void:
 
 func hide_on_screen_controls() -> void:
 	on_screen_controls_visible = false
+
+func get_base_asset_version() -> int:
+	var json = JSON.parse_string(FileAccess.open(Global.config_path.path_join("BaseAssets/pack_info.json"), FileAccess.READ).get_as_text())
+	var version = json.version
+	return get_version_num_int(version)
+
+func get_version_num_int(ver_num := "0.0.0") -> int:
+	return int(ver_num.replace(".", ""))
+
+func merge_dict(target: Dictionary, source: Dictionary) -> void:
+	# SkyanUltra: Used to properly merge dictionaries JSONs rather than out right overwriting entries.
+	for key in source.keys():
+		if target.has(key) and target[key] is Dictionary and source[key] is Dictionary:
+			merge_dict(target[key], source[key])
+		else:
+			target[key] = source[key]
