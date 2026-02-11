@@ -243,6 +243,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("4_vpste")
+draw_center = false
 region_rect = Rect2(0, 0, 32, 32)
 patch_margin_left = 8
 patch_margin_top = 8

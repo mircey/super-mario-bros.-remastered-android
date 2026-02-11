@@ -114,6 +114,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_2wr4s")
+draw_center = false
 region_rect = Rect2(0, 0, 32, 32)
 patch_margin_left = 8
 patch_margin_top = 8
@@ -365,11 +366,11 @@ layout_mode = 2
 focus_mode = 0
 
 [node name="ScrollContainer" parent="BG/Border/Levels/VBoxContainer/LevelInfo/SelectedLevel/MarginContainer/HBoxContainer/HSplitContainer/LeftHalf/LevelInfo" index="0"]
-scroll_horizontal = 91
+scroll_horizontal = 116
 is_active = true
 
 [node name="ScrollContainer2" parent="BG/Border/Levels/VBoxContainer/LevelInfo/SelectedLevel/MarginContainer/HBoxContainer/HSplitContainer/LeftHalf/LevelInfo" index="1"]
-scroll_horizontal = 4
+scroll_horizontal = 61
 is_active = true
 
 [node name="Panel" type="PanelContainer" parent="BG/Border/Levels/VBoxContainer/LevelInfo"]
@@ -568,12 +569,12 @@ layout_mode = 2
 focus_mode = 0
 
 [node name="ScrollContainer" parent="BG/Border/Levels/VBoxContainer/LSSLevelInfo/SelectedOnlineLevel/MarginContainer/HBoxContainer/HSplitContainer/LeftHalf/LevelInfo" index="0"]
-scroll_horizontal = 12
+scroll_horizontal = 52
 is_active = true
 auto_connect_focus = false
 
 [node name="ScrollContainer2" parent="BG/Border/Levels/VBoxContainer/LSSLevelInfo/SelectedOnlineLevel/MarginContainer/HBoxContainer/HSplitContainer/LeftHalf/LevelInfo" index="1"]
-scroll_horizontal = 4
+scroll_horizontal = 61
 is_active = true
 auto_connect_focus = false
 
