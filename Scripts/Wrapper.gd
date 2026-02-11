@@ -19,3 +19,6 @@ func change_scene_to(path) -> void:
 	game_viewport.add_child(new_scene)
 	
 	await new_scene.ready
+
+func get_game_viewport() -> SubViewport:
+	return game_viewport

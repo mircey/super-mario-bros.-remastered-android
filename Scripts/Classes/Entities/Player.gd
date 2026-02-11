@@ -209,7 +209,7 @@ var simulated_velocity := Vector2.ZERO
 func _ready() -> void:
 	if classic_physics:
 		apply_classic_physics()
-	get_viewport().size_changed.connect(recenter_camera)
+	Global.get_game_viewport().size_changed.connect(recenter_camera)
 	show()
 	$Checkpoint/Label.text = str(player_id + 1)
 	$Checkpoint/Label.modulate = [Color("5050FF"), Color("F73910"), Color("1A912E"), Color("FFB762")][player_id]
@@ -932,7 +932,7 @@ func water_exited() -> void:
 func reset_camera_to_center() -> void:
 	animating_camera = true
 	var old_position = camera.position
-	camera.global_position = get_viewport().get_camera_2d().get_screen_center_position()
+	camera.global_position = Global.get_game_viewport().get_camera_2d().get_screen_center_position()
 	camera.reset_physics_interpolation()
 	var tween = create_tween()
 	tween.tween_property(camera, "position", old_position, 0.5)

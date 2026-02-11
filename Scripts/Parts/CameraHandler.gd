@@ -64,8 +64,8 @@ func handle_camera(delta: float) -> void:
 	update_camera_barriers()
 
 func update_camera_barriers() -> void:
-	if get_viewport() != null:
-		camera_center_joint.global_position = get_viewport().get_camera_2d().get_screen_center_position()
+	if Global.get_game_viewport() != null:
+		camera_center_joint.global_position = Global.get_game_viewport().get_camera_2d().get_screen_center_position()
 		camera_center_joint.get_node("LeftWall").position.x = -(get_viewport_rect().size.x / 2)
 		camera_center_joint.get_node("RightWall").position.x = (get_viewport_rect().size.x / 2)
 
@@ -119,7 +119,7 @@ func handle_vertical_scrolling(_delta: float) -> void:
 
 func handle_sp_scrolling() -> void:
 	var distance = camera_position.x - owner.global_position.x
-	var limit = get_viewport().get_visible_rect().size.x / 2 - 16
+	var limit = Global.get_game_viewport().get_visible_rect().size.x / 2 - 16
 	if abs(distance) > limit:
 		do_sp_scroll(sign(owner.global_position.x - camera_position.x))
 
@@ -128,7 +128,7 @@ func do_sp_scroll(direction := 1) -> void:
 	sp_scrolling = true
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	get_tree().paused = true
-	var distance = get_viewport().get_visible_rect().size.x - 32
+	var distance = Global.get_game_viewport().get_visible_rect().size.x - 32
 	if Settings.file.visuals.smbs_scroll == 1: #Sharp X1 (smooth)
 		var tween = create_tween()
 		tween.tween_property(self, "camera_position:x", camera_position.x + (distance * direction), 1)
@@ -171,7 +171,7 @@ func handle_offsets(delta: float) -> void:
 		camera_offset.x = 8
 
 func do_limits() -> void:
-	camera_right_limit = clamp(Player.camera_right_limit, -256 + (get_viewport().get_visible_rect().size.x), INF)
+	camera_right_limit = clamp(Player.camera_right_limit, -256 + (Global.get_game_viewport().get_visible_rect().size.x), INF)
 	camera_position.x = clamp(camera_position.x, point_to_camera_limit(-256 - camera_offset.x, -1), point_to_camera_limit(camera_right_limit - camera_offset.x, 1))
 	camera_position.y = clamp(camera_position.y, point_to_camera_limit_y(Global.current_level.vertical_height, -1), point_to_camera_limit_y(32, 1))
 	var wall_enabled := true

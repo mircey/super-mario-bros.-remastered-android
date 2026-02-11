@@ -81,7 +81,7 @@ var coins := 0:
 		if coins >= 100:#
 			if Settings.file.difficulty.inf_lives == 0 and (Global.current_game_mode != Global.GameMode.CHALLENGE and Global.current_campaign != "SMBANN"):
 				lives += floor(coins / 100.0)
-				AudioManager.play_sfx("1_up", get_viewport().get_camera_2d().get_screen_center_position())
+				AudioManager.play_sfx("1_up", Global.get_game_viewport().get_camera_2d().get_screen_center_position())
 			coins = coins % 100
 var time := 300
 var lives := 3
@@ -175,20 +175,18 @@ var p_switch_timer_paused := false
 
 var debug_mode := false
 
-var controller_connected := false
-var on_screen_controls_visible := true
-#@onready var on_screen_contols = $OnScreenControls
+var game_viewport
 
 func _ready() -> void:
 	if is_snapshot: get_build_time()
 	if OS.is_debug_build(): debug_mode = false
 	current_version = get_version_number()
 	get_server_version()
-	setup_config_dirs() # TODO hardcode config_dir to "user://"
+	setup_config_dirs()
 	check_for_rom()
 	
 	await get_tree().process_frame  # Wait for scene tree to be ready
-	var game_viewport = get_tree().root.get_node("Wrapper/CenterContainer/SubViewportContainer/SubViewport")
+	game_viewport = get_tree().root.get_node("Wrapper/CenterContainer/SubViewportContainer/SubViewport")
 	if game_viewport:
 		reparent(game_viewport)
 
@@ -249,7 +247,7 @@ func _process(delta: float) -> void:
 		take_screenshot()
 
 func take_screenshot() -> void:
-	var img: Image = get_viewport().get_texture().get_image()
+	var img: Image = Global.get_game_viewport().get_texture().get_image()
 	var filename = Global.config_path.path_join("screenshots/screenshot_" + str(int(Time.get_unix_time_from_system())) + ".png")
 	var err = img.save_png(filename)
 	if !err:
@@ -404,7 +402,7 @@ func freeze_screen() -> void:
 		return
 	$Transition.show()
 	$Transition/Freeze.show()
-	$Transition/Freeze.texture = ImageTexture.create_from_image(get_viewport().get_texture().get_image())
+	$Transition/Freeze.texture = ImageTexture.create_from_image(Global.get_game_viewport().get_texture().get_image())
 
 func close_freeze() -> void:
 	$Transition/Freeze.hide()
@@ -490,12 +488,6 @@ func sanitize_string(string := "") -> String:
 			string = string.replace(string[i], " ")
 	return string
 
-func show_on_screen_controls() -> void:
-	on_screen_controls_visible = true
-
-func hide_on_screen_controls() -> void:
-	on_screen_controls_visible = false
-
 func get_base_asset_version() -> int:
 	var json = JSON.parse_string(FileAccess.open(Global.config_path.path_join("BaseAssets/pack_info.json"), FileAccess.READ).get_as_text())
 	var version = json.version
@@ -511,3 +503,7 @@ func merge_dict(target: Dictionary, source: Dictionary) -> void:
 			merge_dict(target[key], source[key])
 		else:
 			target[key] = source[key]
+
+# i wouldve much preferred to use Wrapper.get_game_viewport() everywhere instead, but i just cannot get Wrapper to be a global without loading twice right now! for the time being, thisll do
+func get_game_viewport() -> SubViewport:
+	return game_viewport

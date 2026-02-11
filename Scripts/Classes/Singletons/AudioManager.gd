@@ -135,9 +135,18 @@ func play_sfx(stream_name = "", position := Vector2.ZERO, pitch := 1.0) -> void:
 	player.queue_free()
 
 func play_global_sfx(stream_name := "") -> void:
-	if get_viewport().get_camera_2d() == null:
+	
+	#print("-------------------------------------")
+	#print("play_global_sfx")
+	#print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+	#print(get_viewport().get_children())
+	#print("+++++++++++++++++++++++++++++++++++++")
+	#print(get_viewport().get_child(9).get_child(0).get_child(0).get_child(0).get_children())
+	#print("#####################################")
+	
+	if Global.get_game_viewport().get_camera_2d() == null:
 		return
-	play_sfx(stream_name, get_viewport().get_camera_2d().get_screen_center_position())
+	play_sfx(stream_name, Global.get_game_viewport().get_camera_2d().get_screen_center_position())
 
 func _process(_delta: float) -> void:
 	handle_music()

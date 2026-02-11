@@ -296,6 +296,7 @@ layout_mode = 2
 text = "EDITOR_MAIN_OPEN_FOLDER"
 
 [node name="SelectableLabel2" parent="BG/Border/Levels/VBoxContainer/LevelList/TopBit/MarginContainer/VBoxContainer2" instance=ExtResource("12_psbt7")]
+visible = false
 layout_mode = 2
 text = "EDITOR_MAIN_REFRESH"
 
@@ -363,7 +364,7 @@ layout_mode = 2
 focus_mode = 0
 
 [node name="ScrollContainer" parent="BG/Border/Levels/VBoxContainer/LevelInfo/SelectedLevel/MarginContainer/HBoxContainer/HSplitContainer/LeftHalf/LevelInfo" index="0"]
-scroll_horizontal = 218
+scroll_horizontal = 139
 is_active = true
 
 [node name="ScrollContainer2" parent="BG/Border/Levels/VBoxContainer/LevelInfo/SelectedLevel/MarginContainer/HBoxContainer/HSplitContainer/LeftHalf/LevelInfo" index="1"]
@@ -377,6 +378,7 @@ theme_override_styles/panel = ExtResource("8_psbt7")
 [node name="AutoScrollContainer" type="ScrollContainer" parent="BG/Border/Levels/VBoxContainer/LevelInfo/Panel"]
 layout_mode = 2
 mouse_filter = 2
+scroll_vertical = 83
 horizontal_scroll_mode = 3
 vertical_scroll_mode = 3
 script = ExtResource("24_wf6nb")
@@ -565,7 +567,7 @@ layout_mode = 2
 focus_mode = 0
 
 [node name="ScrollContainer" parent="BG/Border/Levels/VBoxContainer/LSSLevelInfo/SelectedOnlineLevel/MarginContainer/HBoxContainer/HSplitContainer/LeftHalf/LevelInfo" index="0"]
-scroll_horizontal = 9
+scroll_horizontal = 38
 is_active = true
 auto_connect_focus = false
 
@@ -582,6 +584,7 @@ theme_override_styles/panel = ExtResource("8_psbt7")
 [node name="AutoScrollContainer" type="ScrollContainer" parent="BG/Border/Levels/VBoxContainer/LSSLevelInfo/Panel"]
 layout_mode = 2
 mouse_filter = 0
+scroll_vertical = 83
 horizontal_scroll_mode = 3
 script = ExtResource("24_wf6nb")
 direction = 1

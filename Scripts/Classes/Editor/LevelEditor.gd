@@ -295,7 +295,7 @@ func parse_tiles() -> void:
 func return_to_editor() -> void:
 	AudioManager.stop_all_music()
 	$Level.music = null
-	%Camera.global_position = get_viewport().get_camera_2d().get_screen_center_position()
+	%Camera.global_position = Global.get_game_viewport().get_camera_2d().get_screen_center_position()
 	%Camera.reset_physics_interpolation()
 	return_editor_tiles()
 	%Camera.enabled = true
@@ -327,8 +327,8 @@ func return_editor_tiles() -> void:
 func handle_camera(delta: float) -> void:
 	var input_vector = Input.get_vector("editor_cam_left", "editor_cam_right", "editor_cam_up", "editor_cam_down")
 	%Camera.global_position += input_vector * (CAM_MOVE_SPEED_FAST if Input.is_action_pressed("editor_cam_fast") else CAM_MOVE_SPEED_SLOW) * delta
-	%Camera.global_position.y = clamp(%Camera.global_position.y, $Level.vertical_height + (get_viewport().get_visible_rect().size.y / 2), 32 - (get_viewport().get_visible_rect().size.y / 2))
-	%Camera.global_position.x = clamp(%Camera.global_position.x, -256 + (get_viewport().get_visible_rect().size.x / 2), INF)
+	%Camera.global_position.y = clamp(%Camera.global_position.y, $Level.vertical_height + (Global.get_game_viewport().get_visible_rect().size.y / 2), 32 - (Global.get_game_viewport().get_visible_rect().size.y / 2))
+	%Camera.global_position.x = clamp(%Camera.global_position.x, -256 + (Global.get_game_viewport().get_visible_rect().size.x / 2), INF)
 
 func handle_layers() -> void:
 	if Input.is_action_just_pressed("layer_up"):
@@ -456,8 +456,8 @@ func open_tile_properties(tile: Node2D) -> void:
 	%TileModifierMenu.open()
 	current_state = EditorState.MODIFYING_TILE
 	%TileModifierMenu.position = tile.get_global_transform_with_canvas().origin
-	%TileModifierMenu.position.x = clamp(%TileModifierMenu.position.x, 0, get_viewport().get_visible_rect().size.x - %TileModifierMenu.size.x - 2)
-	%TileModifierMenu.position.y = clamp(%TileModifierMenu.position.y, 0, get_viewport().get_visible_rect().size.y - %TileModifierMenu.size.y - 2)
+	%TileModifierMenu.position.x = clamp(%TileModifierMenu.position.x, 0, Global.get_game_viewport().get_visible_rect().size.x - %TileModifierMenu.size.x - 2)
+	%TileModifierMenu.position.y = clamp(%TileModifierMenu.position.y, 0, Global.get_game_viewport().get_visible_rect().size.y - %TileModifierMenu.size.y - 2)
 
 	await %TileModifierMenu.closed
 	current_state = EditorState.IDLE
