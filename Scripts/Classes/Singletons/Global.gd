@@ -39,7 +39,7 @@ const ROM_ASSETS_VERSION := 3
 var server_version := -1
 var current_version := -1
 var version_number := ""
-var is_snapshot := true
+var is_snapshot := false
 
 const LEVEL_THEMES := {
 	"SMB1": SMB1_LEVEL_THEMES,
