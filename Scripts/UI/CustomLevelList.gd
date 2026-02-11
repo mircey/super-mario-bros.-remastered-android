@@ -14,13 +14,13 @@ var selected_lvl_idx := -1
 
 func open(refresh_list := true) -> void:
 	show()
-	if refresh_list:
-		refresh()
+	refresh()
 	if selected_lvl_idx >= 0:
 		%LevelContainers.get_child(selected_lvl_idx).grab_focus()
 	else:
 		#$TopBit/Button.grab_focus()
-		$TopBit/MarginContainer/VBoxContainer2/SelectableLabel2.grab_focus()
+		#$TopBit/MarginContainer/VBoxContainer2/SelectableLabel2.grab_focus()
+		$TopBit/MarginContainer/VBoxContainer2/SelectableLabel3.grab_focus()
 	await get_tree().process_frame
 	set_process(true)
 

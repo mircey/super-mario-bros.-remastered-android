@@ -7,5 +7,5 @@ extends OptionButton
 ## THIS BULLSHIT, TO MAKE IT NOT BLURRY.
 
 func _ready() -> void:
-	get_popup().Global.get_game_viewport().canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
+	get_popup().get_viewport().canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
 	get_popup().canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
