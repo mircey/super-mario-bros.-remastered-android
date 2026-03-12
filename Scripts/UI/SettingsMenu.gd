@@ -49,8 +49,9 @@ func handle_inputs() -> void:
 			AudioManager.play_global_sfx("menu_move")
 	category_index = wrap(category_index, 0, containers.size())
 	current_container = containers[category_index]
-	if disabled_containers.has(current_container):
+	while disabled_containers.has(current_container):
 		category_index = wrap(category_index + direction, 0, containers.size())
+		current_container = containers[category_index]
 
 func open_pack_config_menu(pack: ResourcePackContainer) -> void:
 	$ResourcePackConfigMenu.config_json = pack.config
