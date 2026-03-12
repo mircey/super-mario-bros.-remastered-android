@@ -28,7 +28,7 @@ this is an android port of the [Super Mario Bros. Remaster](https://github.com/J
 
 ## download
 
-get the latest universal release [here](https://github.com/mircey/super-mario-bros.-remastered-android/releases/download/5/smb1r-android-arm64-5.apk)!
+get the latest universal release [here](https://github.com/mircey/super-mario-bros.-remastered-android/releases/latest)!
 
 # how to contribute
 
