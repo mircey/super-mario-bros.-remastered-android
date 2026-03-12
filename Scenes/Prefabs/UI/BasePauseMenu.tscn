@@ -97,7 +97,7 @@ metadata/_custom_type_script = "uid://co6tjg3w6qpd8"
 
 [node name="SettingsMenu" parent="." node_paths=PackedStringArray("disabled_containers") instance=ExtResource("11_k7wpt")]
 layout_mode = 1
-disabled_containers = [NodePath("PanelContainer/MarginContainer/VBoxContainer/Difficulty"), NodePath("PanelContainer/MarginContainer/VBoxContainer/Data")]
+disabled_containers = [NodePath("PanelContainer/MarginContainer/VBoxContainer/Difficulty"), NodePath("PanelContainer/MarginContainer/VBoxContainer/Data"), NodePath("PanelContainer/MarginContainer/VBoxContainer/Controller"), NodePath("PanelContainer/MarginContainer/VBoxContainer/KeyboardControls"), NodePath("PanelContainer/MarginContainer/VBoxContainer/ResourcePacks")]
 
 [connection signal="closed" from="." to="SettingsMenu" method="close"]
 [connection signal="option_3_selected" from="." to="." method="open_settings"]

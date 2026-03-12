@@ -85,3 +85,11 @@ func close() -> void:
 	await get_tree().process_frame
 	Settings.save_settings()
 	process_mode = Node.PROCESS_MODE_DISABLED
+
+func on_controller_reset_button_down() -> void:
+	print("button down")
+	Input.action_press("ui_reset_keybindings")
+
+func on_controller_reset_button_up() -> void:
+	print("button up")
+	Input.action_release("ui_reset_keybindings")

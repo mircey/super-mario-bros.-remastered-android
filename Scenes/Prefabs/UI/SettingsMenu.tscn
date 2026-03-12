@@ -1,11 +1,11 @@
-[gd_scene load_steps=27 format=3 uid="uid://dnksdgorle8su"]
+[gd_scene load_steps=28 format=3 uid="uid://dnksdgorle8su"]
 
 [ext_resource type="Script" uid="uid://cj6858gmexp11" path="res://Scripts/UI/SettingsMenu.gd" id="1_hnwhb"]
 [ext_resource type="StyleBox" uid="uid://comkghpj0djcl" path="res://Resources/UI/Panel.tres" id="2_t6b48"]
 [ext_resource type="Texture2D" uid="uid://0ffyi283pret" path="res://Assets/Sprites/UI/SettingsIcon.png" id="3_7l5ko"]
 [ext_resource type="PackedScene" uid="uid://dbvy0rhwpv4w4" path="res://Scenes/Parts/SelectableOptionNode.tscn" id="3_dl6kk"]
 [ext_resource type="Script" uid="uid://dcmjifllvi3qd" path="res://Scripts/UI/SettingsCategory.gd" id="4_avtty"]
-[ext_resource type="Script" uid="uid://26yissv8bnqw" path="res://Scripts/UI/WindowChanger.gd" id="5_hnwhb"]
+[ext_resource type="Script" uid="uid://dogw674i1q4yq" path="res://Scripts/UI/WindowChanger.gd" id="5_hnwhb"]
 [ext_resource type="Texture2D" uid="uid://deooy8040yx2u" path="res://Assets/Sprites/UI/LocaleFlags.png" id="5_q6iis"]
 [ext_resource type="PackedScene" uid="uid://dtiqcfrw110kd" path="res://Scenes/Parts/SelectableSliderNode.tscn" id="7_om3lc"]
 [ext_resource type="Script" uid="uid://bdgvsycico544" path="res://Scripts/UI/AudioAdjuster.gd" id="8_yclde"]
@@ -128,6 +128,9 @@ func get_str_for_event(event: InputEvent):
 		rep = str(event.axis) + \",\" + str(event.axis_value)
 	return rep
 "
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k6yev"]
+size = Vector2(220, 15)
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_k6yev"]
 color = Color(1, 1, 1, 1)
@@ -889,11 +892,23 @@ type = 1
 script = SubResource("GDScript_ksnto")
 type = 1
 
+[node name="Button" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/Controller"]
+visible = false
+z_index = 4095
+layout_mode = 2
+text = "TAP HERE TO RESET BINDINGS."
+
 [node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/Controller"]
 layout_mode = 2
 size_flags_vertical = 10
-text = "PRESS F5 TO RESET BINDINGS."
+text = "TAP HERE TO RESET BINDINGS."
 uppercase = true
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="PanelContainer/MarginContainer/VBoxContainer/Controller"]
+z_index = 4000
+position = Vector2(110, 128)
+shape = SubResource("RectangleShape2D_k6yev")
+action = "ui_reset_keybindings"
 
 [node name="Data" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" node_paths=PackedStringArray("options")]
 visible = false
@@ -1046,6 +1061,11 @@ script = ExtResource("19_k6yev")
 [connection signal="value_changed" from="PanelContainer/MarginContainer/VBoxContainer/Difficulty/BackScroll" to="PanelContainer/MarginContainer/VBoxContainer/Difficulty/DifficultySetter" method="backscroll_changed"]
 [connection signal="value_changed" from="PanelContainer/MarginContainer/VBoxContainer/Difficulty/TimeLimit" to="PanelContainer/MarginContainer/VBoxContainer/Difficulty/DifficultySetter" method="time_limit_changed"]
 [connection signal="value_changed" from="PanelContainer/MarginContainer/VBoxContainer/Difficulty/LakituStyle" to="PanelContainer/MarginContainer/VBoxContainer/Difficulty/DifficultySetter" method="lakitu_style_changed"]
+[connection signal="button_down" from="PanelContainer/MarginContainer/VBoxContainer/Controller/Button" to="." method="on_controller_reset_button_down"]
+[connection signal="button_up" from="PanelContainer/MarginContainer/VBoxContainer/Controller/Button" to="." method="on_controller_reset_button_up"]
+[connection signal="gui_input" from="PanelContainer/MarginContainer/VBoxContainer/Controller/Label" to="." method="on_controller_reset_label_tapped"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/Controller/TouchScreenButton" to="." method="on_controller_reset_button_down"]
+[connection signal="released" from="PanelContainer/MarginContainer/VBoxContainer/Controller/TouchScreenButton" to="." method="on_controller_reset_button_up"]
 [connection signal="deleted" from="PanelContainer/MarginContainer/VBoxContainer/Data/CampaignData" to="PanelContainer/MarginContainer/VBoxContainer/Data/DataDeletion" method="delete_story"]
 [connection signal="deleted" from="PanelContainer/MarginContainer/VBoxContainer/Data/ChallengeModeData" to="PanelContainer/MarginContainer/VBoxContainer/Data/DataDeletion" method="delete_challenge"]
 [connection signal="deleted" from="PanelContainer/MarginContainer/VBoxContainer/Data/BooRaceData" to="PanelContainer/MarginContainer/VBoxContainer/Data/DataDeletion" method="delete_boo"]
