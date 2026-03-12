@@ -12,7 +12,7 @@ func delete() -> void:
 	idx = 0
 
 func apply_data(data := "") -> void:
-	if Global.current_level == null:
+	if Global.current_level == null || data == "":
 		hide()
 		return
 	$Label.visible = SpeedrunHandler.ghost_idx < 60
