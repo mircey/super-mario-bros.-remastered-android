@@ -422,8 +422,6 @@ position = Vector2(2856, -120)
 [connection signal="area_entered" from="Tiles/@Area2D@29710" to="Tiles/@Area2D@29710" method="area_entered"]
 [connection signal="area_entered" from="Tiles/@Area2D@29711" to="Tiles/@Area2D@29711" method="area_entered"]
 [connection signal="area_entered" from="Tiles/@Area2D@29712" to="Tiles/@Area2D@29712" method="area_entered"]
-[connection signal="axe_touched" from="CastleBridge" to="Bowser" method="bridge_fall"]
-[connection signal="victory_begin" from="CastleBridge" to="CastleToad" method="begin"]
 [connection signal="victory_begin" from="CastleBridge" to="ChallengeNodes/CastleChallengeEnd" method="begin"]
 
 [editable path="Bowser"]

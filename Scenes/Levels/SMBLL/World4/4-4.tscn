@@ -351,8 +351,6 @@ position = Vector2(2040, -56)
 [connection signal="player_block_hit" from="Tiles/@AnimatableBody2D@28549" to="Tiles/@AnimatableBody2D@28549/BlockAnimations" method="bounce_block" unbinds=1]
 [connection signal="shell_block_hit" from="Tiles/@AnimatableBody2D@28549" to="Tiles/@AnimatableBody2D@28549" method="dispense_item" unbinds=1]
 [connection signal="shell_block_hit" from="Tiles/@AnimatableBody2D@28549" to="Tiles/@AnimatableBody2D@28549/BlockAnimations" method="bounce_block" unbinds=1]
-[connection signal="axe_touched" from="CastleBridge" to="Bowser" method="bridge_fall"]
-[connection signal="victory_begin" from="CastleBridge" to="CastleToad" method="begin"]
 [connection signal="victory_begin" from="CastleBridge" to="ChallengeNodes/CastleChallengeEnd" method="begin"]
 
 [editable path="CastleBridge"]
