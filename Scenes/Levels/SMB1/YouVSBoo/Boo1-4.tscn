@@ -308,8 +308,6 @@ particles = 3
 [connection signal="area_entered" from="Tiles/@Area2D@138956" to="Tiles/@Area2D@138956" method="area_entered"]
 [connection signal="area_entered" from="Tiles/@Area2D@138957" to="Tiles/@Area2D@138957" method="area_entered"]
 [connection signal="axe_touched" from="CastleBridge" to="BooRaceHandler" method="player_win_race"]
-[connection signal="axe_touched" from="CastleBridge" to="RaceBoo" method="flag_die"]
-[connection signal="axe_touched" from="CastleBridge" to="Bowser" method="bridge_fall"]
 [connection signal="victory_begin" from="CastleBridge" to="BooRaceHandler" method="tally_time"]
 [connection signal="victory_begin" from="CastleBridge" to="CameraRightLimit" method="_enter_tree"]
 

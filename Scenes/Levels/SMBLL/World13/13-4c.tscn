@@ -200,5 +200,4 @@ particles = 3
 [connection signal="player_block_hit" from="Tiles/@AnimatableBody2D@63659" to="Tiles/@AnimatableBody2D@63659/BlockAnimations" method="bounce_block" unbinds=1]
 [connection signal="shell_block_hit" from="Tiles/@AnimatableBody2D@63659" to="Tiles/@AnimatableBody2D@63659" method="dispense_item" unbinds=1]
 [connection signal="shell_block_hit" from="Tiles/@AnimatableBody2D@63659" to="Tiles/@AnimatableBody2D@63659/BlockAnimations" method="bounce_block" unbinds=1]
-[connection signal="axe_touched" from="CastleBridge" to="Enemies/Bowser" method="bridge_fall"]
 [connection signal="victory_begin" from="CastleBridge" to="LostLevelsEndingDoor" method="begin"]
